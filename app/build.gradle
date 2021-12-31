@@ -78,7 +78,4 @@ dependencies {
 
     //for the StringUtils
     implementation "org.apache.commons:commons-lang3:$commons_lang_version"
-    //for seekbar
-    implementation 'com.crystal:crystalrangeseekbar:1.1.3'
-
 }

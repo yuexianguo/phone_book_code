@@ -5,12 +5,28 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/home_call_log_bg"
-    android:orientation="vertical"
+    android:padding="@dimen/x30"
+    android:orientation="horizontal"
     >
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_call_log"
-        android:layout_width="match_parent"
+        android:id="@+id/recyclerview_dept_list"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_marginRight="2dp"
+        android:layout_height="match_parent"/>
+
+    <View
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/dash_line"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_dept_list_detail"
+        android:layout_marginLeft="2dp"
+        android:layout_width="0dp"
+        android:layout_weight="1"
         android:layout_height="match_parent"/>
 
 </LinearLayout>
