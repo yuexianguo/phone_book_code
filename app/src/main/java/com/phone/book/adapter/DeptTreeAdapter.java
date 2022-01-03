@@ -10,7 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.phone.book.R;
-import com.phone.book.bean.Tree;
+import com.phone.book.bean.DeptTree;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -22,12 +22,12 @@ import java.util.Stack;
  * data : 2021/12/31
  */
 public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHolder> {
-    ArrayList<Tree> treeList=new ArrayList<>();
+    ArrayList<DeptTree> deptTreeList =new ArrayList<>();
     Context context ;
-    Tree pin;
-    public DeptTreeAdapter(Context context, Tree tree) {
+    DeptTree pin;
+    public DeptTreeAdapter(Context context, DeptTree deptTree) {
         this.context  =  context;
-        treeList.addAll(tree.child);
+        deptTreeList.addAll(deptTree.child);
     }
 
     @NonNull
@@ -39,16 +39,16 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull DeptTreeAdapter.ViewHolder holder, int position) {
-        Tree tree = treeList.get(position);
-        if(!treeList.get(position).child.isEmpty()){
-            holder.tag.setText(treeList.get(position).tag?"-":"+");
+        DeptTree deptTree = deptTreeList.get(position);
+        if(!deptTreeList.get(position).child.isEmpty()){
+            holder.tag.setText(deptTreeList.get(position).tag?"-":"+");
         }else{
             holder.tag.setText("    ");
         }
-        holder.node.setText(tree.node);
+        holder.node.setText(deptTree.name);
         holder.itemView.setOnClickListener(view->{
             int pos = holder.getLayoutPosition();
-            pin = treeList.get(pos);
+            pin = deptTreeList.get(pos);
             pin .tag = !pin.tag;
             if (pin.tag){
                 expand(pos);
@@ -60,27 +60,27 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
     }
 
     private void fold(int pos) {
-        Stack<Tree> stack = new Stack<>();
-        stack.push(treeList.get(pos));
+        Stack<DeptTree> stack = new Stack<>();
+        stack.push(deptTreeList.get(pos));
         int count=0;
         while (!stack.isEmpty()){
-            for (Tree tree:stack.pop().child) {
-                if(tree.tag){stack.push(tree);}
+            for (DeptTree deptTree :stack.pop().child) {
+                if(deptTree.tag){stack.push(deptTree);}
                 count++;
             }
         }
         for(int i=0;i<count;i++){
-            treeList.remove(pos+1);
+            deptTreeList.remove(pos+1);
         }
     }
 
     private void expand(int pos) {
-        treeList.addAll(pos+1,treeList.get(pos).child);
+        deptTreeList.addAll(pos+1, deptTreeList.get(pos).child);
     }
 
     @Override
     public int getItemCount() {
-        return treeList.size();
+        return deptTreeList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

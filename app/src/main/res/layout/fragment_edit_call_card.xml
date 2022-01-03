@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="@dimen/fragment_padding">
+
+    <LinearLayout
+        android:id="@+id/lay1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:editInfoHint="请输入姓名"
+            app:editInfoName="姓名" />
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_work"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:editInfoHint="请输入职务"
+            app:editInfoName="职务" />
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_dept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:editInfoHint="请输入部门"
+            app:editInfoName="部门" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lay1"
+        android:layout_marginTop="@dimen/x20"
+        android:orientation="horizontal">
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_extension1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:editInfoHint="请输入分机"
+            app:editInfoName="分机" />
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_phone1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:editInfoHint="请输入手机"
+            app:editInfoName="手机" />
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_call1"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:editInfoHint="请输入电话"
+            app:editInfoName="电话" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lay2"
+        android:layout_marginTop="@dimen/x20"
+        android:orientation="horizontal">
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_extension2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:editInfoHint="请输入分机2"
+            app:editInfoName="分机" />
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_phone2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:editInfoHint="请输入手机2"
+            app:editInfoName="手机" />
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_call2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:editInfoHint="请输入电话2"
+            app:editInfoName="电话" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lay3"
+        android:layout_marginTop="@dimen/x20"
+        android:orientation="horizontal">
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_home_phone"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:editInfoHint="请输入宅电"
+            app:editInfoName="宅电" />
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_fax"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:editInfoHint="请输入传真"
+            app:editInfoName="传真" />
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_area_code"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            app:editInfoHint="请输入区号"
+            app:editInfoName="区号" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay5"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lay4"
+        android:layout_marginTop="@dimen/x20"
+        android:orientation="horizontal">
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_email"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            app:editInfoHint="请输入邮箱"
+            app:editInfoName="邮件" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:layout_height="@dimen/y60"
+            android:gravity="center_vertical"
+            >
+
+            <TextView
+                android:id="@+id/edit_info_item_head_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black"
+                android:text="头像"
+                android:textSize="@dimen/x34" />
+
+            <LinearLayout
+                android:id="@+id/ll_head_layout"
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:clickable="true"
+                android:background="@drawable/edit_info_item_box_bg"
+                android:layout_height="@dimen/x50"
+                android:layout_marginStart="@dimen/x20"
+                android:orientation="horizontal"
+                android:gravity="start|center_vertical"
+                android:focusable="true">
+
+                <ImageView
+                    android:id="@+id/iv_head_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:padding="@dimen/x8"
+                    android:src="@mipmap/icon_man"
+                    />
+
+                <TextView
+                    android:id="@+id/edit_info_head_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/x34"
+                    android:textColor="@color/black"
+                    android:text="男士"
+                    />
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lay6"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/lay5"
+        android:layout_marginTop="@dimen/x20"
+        android:orientation="horizontal">
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/edit_info_remarks"
+            android:layout_below="@+id/lay5"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="2"
+            app:editInfoHint="备注"
+            app:editInfoName="备注" />
+
+        <com.phone.book.view.EditInfoView
+            android:id="@+id/empty"
+            android:layout_width="0dp"
+            android:visibility="invisible"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+             />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/edit_info_save"
+        android:layout_width="@dimen/x120"
+        android:layout_height="@dimen/x60"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/edit_info_cancel"
+        android:layout_marginRight="@dimen/x40"
+        android:text="保存"
+        android:background="@drawable/common_selector_btn_bg"
+        />
+
+    <Button
+        android:id="@+id/edit_info_cancel"
+        android:layout_width="@dimen/x120"
+        android:layout_height="@dimen/x60"
+        android:text="取消"
+        android:layout_marginRight="@dimen/x60"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/common_selector_btn_bg"
+        />
+
+</RelativeLayout>

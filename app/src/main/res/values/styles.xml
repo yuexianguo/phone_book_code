@@ -47,5 +47,16 @@
         <item name="android:colorControlActivated">@color/commonColorLightGray</item>
         <item name="android:colorControlNormal">@color/commonColorLightGray</item>
     </style>
-
+    <style name="DeptBottomAnimaStyle">
+        <item name="android:windowEnterAnimation">@anim/dept_bottom_anim_in</item>
+        <item name="android:windowExitAnimation">@anim/dept_bottom_anim_out</item>
+    </style>
+    <style name="ItemBtn">
+        <item name="android:textColor">@color/commonColorWhite</item>
+        <item name="android:textSize">@dimen/x30</item>
+        <item name="android:background">@drawable/common_selector_btn_bg</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:layout_width">@dimen/x90</item>
+        <item name="android:layout_height">@dimen/x40</item>
+    </style>
 </resources>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="EditInfoView">
+        <attr name="editInfoName" format="string|reference" />
+        <attr name="editInfoDesc" format="string|reference" />
+        <attr name="editInfoHint" format="string|reference" />
+    </declare-styleable>
+
+</resources>

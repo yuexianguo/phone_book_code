@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dialog_background_color"
+    android:orientation="vertical">
+
+    <TextView
+        style="@style/ItemTitle"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/x80"
+        android:text="请选择你喜欢的头像"
+        />
+
+    <TextView
+        android:id="@+id/dialog_head_tv_item_man"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/icon_man"
+        android:text="男士"
+        android:textSize="@dimen/x40"
+        android:gravity="center_vertical"
+        android:drawablePadding="@dimen/x30"
+        android:background="@drawable/common_selector_border_bg"
+        />
+
+    <TextView
+        android:id="@+id/dialog_head_tv_item_woman"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:drawableLeft="@mipmap/icon_woman"
+        android:layout_marginTop="@dimen/x20"
+        android:text="女士"
+        android:textSize="@dimen/x40"
+        android:gravity="center_vertical"
+        android:drawablePadding="@dimen/x30"
+        android:background="@drawable/common_selector_border_bg"
+        />
+</LinearLayout>

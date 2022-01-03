@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/x100"
+    android:background="#DCffffff"
+    android:gravity="center"
+    >
+
+    <Button
+        android:id="@+id/add_dept"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="增加部门"
+        android:layout_height="wrap_content"
+        style="@style/ItemTitle"
+        />
+
+    <Button
+        android:id="@+id/modify_dept"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="修改部门"
+        android:layout_height="wrap_content"
+        style="@style/ItemTitle"
+        />
+
+    <Button
+        android:id="@+id/delete_dept"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        android:text="删除部门"
+        style="@style/ItemTitle"
+        />
+
+    <Button
+        android:id="@+id/add_call_card"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="增加名片"
+        android:layout_height="wrap_content"
+        style="@style/ItemTitle"
+        />
+
+    <Button
+        android:id="@+id/delete_call_card"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="删除名片"
+        android:layout_height="wrap_content"
+        style="@style/ItemTitle"
+        />
+
+    <Button
+        android:id="@+id/dept_bottom_dialog_cancel"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:text="取消"
+        android:layout_height="wrap_content"
+        style="@style/ItemTitle"
+        />
+
+</LinearLayout>

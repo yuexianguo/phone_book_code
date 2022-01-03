@@ -44,6 +44,7 @@ abstract class BaseActivity : AppCompatActivity(), OperationCallback, BaseView {
      * Common Appbar
      */
     private var appBar: AppBarLayout? = null
+    private var iv_base_logo: ImageView? = null
 
     /**
      * get the current toolbar
@@ -183,6 +184,7 @@ abstract class BaseActivity : AppCompatActivity(), OperationCallback, BaseView {
      */
     private fun initCommonAppbar() {
         appBar = findViewById(R.id.appbar_base)
+        iv_base_logo = findViewById(R.id.iv_base_logo)
         toolbar = findViewById(R.id.toolbar_base)
         leftTitleTV = findViewById(R.id.tv_middle_title_base)
         setSupportActionBar(toolbar)
@@ -285,10 +287,19 @@ abstract class BaseActivity : AppCompatActivity(), OperationCallback, BaseView {
         appBar?.visibility = View.GONE
     }
 
+    fun hideLogo() {
+        iv_base_logo?.visibility = View.GONE
+    }
+
     /**
      * hide toolbar
      */
     fun hideToolbar() {
+        toolbar?.visibility = View.GONE
+    }
+
+    fun hideAppbarToolbar(){
+        appBar?.visibility = View.GONE
         toolbar?.visibility = View.GONE
     }
 

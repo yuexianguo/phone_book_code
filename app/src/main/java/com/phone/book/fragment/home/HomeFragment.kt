@@ -1,4 +1,4 @@
-package com.phone.book.fragment
+package com.phone.book.fragment.home
 
 import android.content.*
 import android.os.Bundle
@@ -72,8 +72,7 @@ class HomeFragment : BaseFragment() {
 
         tab_home.getTabAt(mCurrentIndex)?.select()
         selectedIndex(mCurrentIndex)
-        mMainActivity?.hideAppbar()
-        mMainActivity?.hideToolbar()
+        mMainActivity?.hideAppbarToolbar()
 
 //        PhoneFileUtils.copyPrivateToDocuments(BaseApplication.context, "Myphone.txt", PhoneBookInfo("研发部","13111111").toString());
 

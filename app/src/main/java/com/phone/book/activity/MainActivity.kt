@@ -7,8 +7,8 @@ import androidx.fragment.app.Fragment
 import com.phone.book.R
 import com.phone.book.common.BaseActivity
 import com.phone.book.common.utils.ActivityUtils.replaceFragment
-import com.phone.book.fragment.HomeFragment
-import com.phone.book.fragment.TAG_HOME_FRAGMENT
+import com.phone.book.fragment.home.HomeFragment
+import com.phone.book.fragment.home.TAG_HOME_FRAGMENT
 
 
 class MainActivity : BaseActivity() {
