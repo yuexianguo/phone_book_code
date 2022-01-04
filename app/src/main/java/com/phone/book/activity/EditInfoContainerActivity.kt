@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import com.phone.book.R
+import com.phone.book.bean.PhoneDepartItem
 import com.phone.book.common.BaseActivity
-import com.phone.book.fragment.EditCallCardFragment
-import com.phone.book.fragment.TAG_EDIT_CALL_CARD_FRAGMENT
+import com.phone.book.fragment.*
 import com.phone.book.fragment.home.HomeFragment
 import com.phone.book.fragment.home.TAG_HOME_FRAGMENT
 
@@ -18,10 +18,21 @@ class EditInfoContainerActivity : BaseActivity() {
     companion object {
         private const val EXTRA_KEY_TARGET_FRAGMENT = "target_fragment"
         private const val TAG = "EditInfoActivity"
+
+
         fun startEditCallCardFragment(context: Context?) {
             if (context != null) {
                 val intent = Intent(context, EditInfoContainerActivity::class.java)
                 intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_EDIT_CALL_CARD_FRAGMENT)
+                context.startActivity(intent)
+            }
+        }
+
+        fun startEditDeptFragment(context: Context?,targetDept: PhoneDepartItem?) {
+            if (context != null) {
+                val intent = Intent(context, EditInfoContainerActivity::class.java)
+                intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_EDIT_DEPT_FRAGMENT)
+                intent.putExtra(TAG_TARGET_DEPART_ITEM, targetDept)
                 context.startActivity(intent)
             }
         }
@@ -48,6 +59,11 @@ class EditInfoContainerActivity : BaseActivity() {
             when (target) {
                 TAG_EDIT_CALL_CARD_FRAGMENT -> {
                     fragment = EditCallCardFragment.newInstance()
+                }
+                TAG_EDIT_DEPT_FRAGMENT -> {
+                    val serializableExtra = intent.getSerializableExtra(TAG_TARGET_DEPART_ITEM)
+                    val targetDept =  if (serializableExtra != null)serializableExtra as PhoneDepartItem else null
+                    fragment = EditDeptFragment.newInstance(targetDept)
                 }
                 else -> {
                 }

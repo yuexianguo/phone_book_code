@@ -22,12 +22,19 @@ import java.util.Stack;
  * data : 2021/12/31
  */
 public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHolder> {
-    ArrayList<DeptTree> deptTreeList =new ArrayList<>();
+    ArrayList<DeptTree> treeList =new ArrayList<>();
     Context context ;
     DeptTree pin;
-    public DeptTreeAdapter(Context context, DeptTree deptTree) {
+    private int preSelectPos = 0;
+    public DeptTreeAdapter(Context context, ArrayList<DeptTree> list) {
         this.context  =  context;
-        deptTreeList.addAll(deptTree.child);
+        treeList.clear();
+        treeList.addAll(list);
+    }
+
+    public void setNewList(ArrayList<DeptTree> list){
+        treeList.clear();
+        treeList.addAll(list);
     }
 
     @NonNull
@@ -39,53 +46,84 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull DeptTreeAdapter.ViewHolder holder, int position) {
-        DeptTree deptTree = deptTreeList.get(position);
-        if(!deptTreeList.get(position).child.isEmpty()){
-            holder.tag.setText(deptTreeList.get(position).tag?"-":"+");
-        }else{
-            holder.tag.setText("    ");
+        if (preSelectPos == position) {
+            holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.commonColorGreen));
+        }else {
+            holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(android.R.color.transparent));
         }
-        holder.node.setText(deptTree.name);
-        holder.itemView.setOnClickListener(view->{
+        DeptTree tree = treeList.get(position);
+        if (!tree.child.isEmpty()) {
+            if (tree.level == 1){
+                holder.tag.setText(tree.tag ? "-" : "+");
+            } else {
+                String expandEmpty = getExpandEmpty(tree.level);
+                holder.tag.setText(tree.tag ? expandEmpty+"-" : expandEmpty+"+");
+            }
+        } else {
+            String expandEmpty = getExpandEmpty(tree.level);
+            holder.tag.setText(expandEmpty);
+        }
+        holder.node.setText(tree.name);
+        holder.itemView.setOnClickListener(view -> {
             int pos = holder.getLayoutPosition();
-            pin = deptTreeList.get(pos);
-            pin .tag = !pin.tag;
-            if (pin.tag){
+            pin = treeList.get(pos);
+            pin.tag = !pin.tag;
+            preSelectPos = pos;
+            if (pin.tag) {
                 expand(pos);
-            }else{
+            } else {
                 fold(pos);
             }
             notifyDataSetChanged();
         });
     }
 
+    public DeptTree getCurrentDept() {
+        return treeList.size() > preSelectPos? treeList.get(preSelectPos):null;
+    }
+
+    private String getExpandEmpty(Integer level) {
+        String baseEmpty = "    ";
+        StringBuilder target= new StringBuilder();
+        if (level > 1) {
+            for (int i = 0; i < level -1; i++) {
+                target.append(baseEmpty);
+            }
+        }
+
+        return target.toString();
+    }
+
     private void fold(int pos) {
         Stack<DeptTree> stack = new Stack<>();
-        stack.push(deptTreeList.get(pos));
-        int count=0;
-        while (!stack.isEmpty()){
-            for (DeptTree deptTree :stack.pop().child) {
-                if(deptTree.tag){stack.push(deptTree);}
+        stack.push(treeList.get(pos));
+        int count = 0;
+        while (!stack.isEmpty()) {
+            for (DeptTree tree : stack.pop().child) {
+                if (tree.tag) {
+                    stack.push(tree);
+                }
                 count++;
             }
         }
-        for(int i=0;i<count;i++){
-            deptTreeList.remove(pos+1);
+        for (int i = 0; i < count; i++) {
+            treeList.remove(pos + 1);
         }
     }
 
     private void expand(int pos) {
-        deptTreeList.addAll(pos+1, deptTreeList.get(pos).child);
+        treeList.addAll(pos + 1, treeList.get(pos).child);
     }
 
     @Override
     public int getItemCount() {
-        return deptTreeList.size();
+        return treeList.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView node;
         TextView tag;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tag = itemView.findViewById(R.id.adapter_item_dept_tag);

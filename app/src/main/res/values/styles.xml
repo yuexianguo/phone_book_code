@@ -59,4 +59,9 @@
         <item name="android:layout_width">@dimen/x90</item>
         <item name="android:layout_height">@dimen/x40</item>
     </style>
+
+    <style name="DeptItem">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">@dimen/x50</item>
+    </style>
 </resources>
