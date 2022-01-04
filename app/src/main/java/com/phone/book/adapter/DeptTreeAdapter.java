@@ -22,19 +22,25 @@ import java.util.Stack;
  * data : 2021/12/31
  */
 public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHolder> {
-    ArrayList<DeptTree> treeList =new ArrayList<>();
-    Context context ;
+    ArrayList<DeptTree> treeList = new ArrayList<>();
+    ArrayList<DeptTree> originTreeList = new ArrayList<>();
+    Context context;
     DeptTree pin;
     private int preSelectPos = 0;
+
     public DeptTreeAdapter(Context context, ArrayList<DeptTree> list) {
-        this.context  =  context;
+        this.context = context;
         treeList.clear();
         treeList.addAll(list);
+        originTreeList.clear();
+        originTreeList.addAll(list);
     }
 
-    public void setNewList(ArrayList<DeptTree> list){
+    public void setNewList(ArrayList<DeptTree> list) {
         treeList.clear();
         treeList.addAll(list);
+        originTreeList.clear();
+        originTreeList.addAll(list);
     }
 
     @NonNull
@@ -47,21 +53,27 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull DeptTreeAdapter.ViewHolder holder, int position) {
         if (preSelectPos == position) {
-            holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.commonColorGreen));
-        }else {
+            holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.item_select_bg));
+        } else {
             holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(android.R.color.transparent));
         }
         DeptTree tree = treeList.get(position);
         if (!tree.child.isEmpty()) {
-            if (tree.level == 1){
+            if (tree.level == 1) {
                 holder.tag.setText(tree.tag ? "-" : "+");
             } else {
                 String expandEmpty = getExpandEmpty(tree.level);
-                holder.tag.setText(tree.tag ? expandEmpty+"-" : expandEmpty+"+");
+                holder.tag.setText(tree.tag ? expandEmpty + "-" : expandEmpty + "+");
             }
         } else {
-            String expandEmpty = getExpandEmpty(tree.level);
-            holder.tag.setText(expandEmpty);
+            if (tree.level == 1) {
+                String expandEmpty = getExpandEmpty(tree.level);
+                holder.tag.setText(expandEmpty);
+            } else {
+                String expandEmpty = getExpandEmpty(tree.level) + "  ";
+                holder.tag.setText(expandEmpty);
+            }
+
         }
         holder.node.setText(tree.name);
         holder.itemView.setOnClickListener(view -> {
@@ -79,16 +91,18 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
     }
 
     public DeptTree getCurrentDept() {
-        return treeList.size() > preSelectPos? treeList.get(preSelectPos):null;
+        return treeList.size() > preSelectPos ? treeList.get(preSelectPos) : null;
     }
 
     private String getExpandEmpty(Integer level) {
         String baseEmpty = "    ";
-        StringBuilder target= new StringBuilder();
+        StringBuilder target = new StringBuilder();
         if (level > 1) {
-            for (int i = 0; i < level -1; i++) {
+            for (int i = 0; i < level - 1; i++) {
                 target.append(baseEmpty);
             }
+        } else {
+            target.append("  ");
         }
 
         return target.toString();
@@ -96,7 +110,9 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
 
     private void fold(int pos) {
         Stack<DeptTree> stack = new Stack<>();
-        stack.push(treeList.get(pos));
+        DeptTree deptTree = treeList.get(pos);
+
+        stack.push(deptTree);
         int count = 0;
         while (!stack.isEmpty()) {
             for (DeptTree tree : stack.pop().child) {
@@ -106,9 +122,13 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
                 count++;
             }
         }
-        for (int i = 0; i < count; i++) {
-            treeList.remove(pos + 1);
+
+        if (treeList.size() > pos + 1) {
+            for (int i = 0; i < count; i++) {
+                treeList.remove(pos + 1);
+            }
         }
+
     }
 
     private void expand(int pos) {
@@ -118,6 +138,10 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
     @Override
     public int getItemCount() {
         return treeList.size();
+    }
+
+    public void setOriginDeptPosition() {
+        preSelectPos = 0;
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

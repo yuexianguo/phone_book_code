@@ -10,4 +10,5 @@
 
     <color name="bg_fragment">#FFFFFFFF</color>
     <color name="dialog_background_color">#DCffffff</color>
+    <color name="item_select_bg">#F4C18A</color>
 </resources>

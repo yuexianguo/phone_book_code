@@ -16,12 +16,13 @@ public class DeptTree {
     public DeptTree parent;
     public Boolean tag= false;
     public Integer level;
-    public DeptTree(Long id, Long pid, String name, DeptTree parent,Integer level) {
+    public DeptTree(Long id, Long pid, String name, DeptTree parent,Integer level,Boolean tag) {
         this.id = id;
         this.pid = pid;
         this.name = name;
         this.parent = parent;
         this.level = level;
+        this.tag = tag;
     }
 }
 

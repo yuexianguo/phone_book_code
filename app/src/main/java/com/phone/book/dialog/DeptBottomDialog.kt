@@ -74,7 +74,7 @@ class DeptBottomDialog : BaseDialogFragment() {
         add_call_card?.setOnClickListener(object :OnSingleClickListener(){
             override fun onSingleClick(v: View) {
                 dismiss()
-                EditInfoContainerActivity.startEditCallCardFragment(fragment.requireContext())
+                EditInfoContainerActivity.startEditCallCardFragment(fragment.requireContext(),phoneDepartItem)
             }
         })
 

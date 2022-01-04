@@ -20,10 +20,11 @@ class EditInfoContainerActivity : BaseActivity() {
         private const val TAG = "EditInfoActivity"
 
 
-        fun startEditCallCardFragment(context: Context?) {
+        fun startEditCallCardFragment(context: Context?, targetDept: PhoneDepartItem?) {
             if (context != null) {
                 val intent = Intent(context, EditInfoContainerActivity::class.java)
                 intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_EDIT_CALL_CARD_FRAGMENT)
+                intent.putExtra(TAG_TARGET_DEPART_ITEM, targetDept)
                 context.startActivity(intent)
             }
         }
@@ -58,7 +59,9 @@ class EditInfoContainerActivity : BaseActivity() {
             var fragment: Fragment? = null
             when (target) {
                 TAG_EDIT_CALL_CARD_FRAGMENT -> {
-                    fragment = EditCallCardFragment.newInstance()
+                    val serializableExtra = intent.getSerializableExtra(TAG_TARGET_DEPART_ITEM)
+                    val targetDept =  if (serializableExtra != null)serializableExtra as PhoneDepartItem else null
+                    fragment = EditCallCardFragment.newInstance(targetDept)
                 }
                 TAG_EDIT_DEPT_FRAGMENT -> {
                     val serializableExtra = intent.getSerializableExtra(TAG_TARGET_DEPART_ITEM)

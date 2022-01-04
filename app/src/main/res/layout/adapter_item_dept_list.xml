@@ -2,12 +2,14 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal"
     android:layout_width="match_parent"
+    android:gravity="center_vertical"
     android:layout_height="@dimen/x100">
     <TextView
         android:id="@+id/adapter_item_dept_tag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/ItemTitle"
+        android:textSize="@dimen/x50"
         />
     <TextView
         android:id="@+id/adapter_item_dept_name"
