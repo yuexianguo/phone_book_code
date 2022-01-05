@@ -1,9 +1,16 @@
 package com.phone.book.fragment
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
+import android.text.InputFilter
+import android.text.InputType
 import android.view.View
+import android.widget.EditText
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.phone.book.PhoneIntents
 import com.phone.book.R
 import com.phone.book.activity.EditInfoContainerActivity
 import com.phone.book.bean.PhoneBookItem
@@ -16,6 +23,7 @@ import com.phone.book.dialog.TAG_HEAD_SELECT_DIALOG
 import com.phone.book.dialog.TYPE_MAN
 import com.phone.book.dialog.TYPE_WOMAN
 import com.phone.book.manager.PhoneInfoManager
+import com.phone.book.utils.InputFilterMinMax
 import kotlinx.android.synthetic.main.fragment_edit_call_card.*
 
 
@@ -23,7 +31,7 @@ const val TAG_EDIT_CALL_CARD_FRAGMENT = "EditCallCardFragment"
 class EditCallCardFragment : BaseFragment() {
 
 
-    private var activity: EditInfoContainerActivity? = null
+    private var mActivity: EditInfoContainerActivity? = null
     private var currentDept: PhoneDepartItem? = null
     private var isHeadMan = true
     override val layoutId: Int
@@ -31,6 +39,7 @@ class EditCallCardFragment : BaseFragment() {
 
     companion object {
         private const val TAG_TARGET_DEPART_BEAN = "tag_target_depart_bean"
+        private const val REQUEST_CODE_SELECT_DEPT = 0x01
         @JvmStatic
         fun newInstance(targetDept: PhoneDepartItem?) =
             EditCallCardFragment().apply {
@@ -54,6 +63,21 @@ class EditCallCardFragment : BaseFragment() {
         currentDept?.apply {
             edit_info_dept.desc = name
         }
+        edit_info_extension1.edit_info_box_value?.inputType = InputType.TYPE_CLASS_NUMBER
+        edit_info_extension1.edit_info_box_value?.maxEms = 4
+        edit_info_extension1.edit_info_box_value?.filters = arrayOf<InputFilter>(InputFilterMinMax("0", "9999"))
+        edit_info_extension2.edit_info_box_value?.inputType = InputType.TYPE_CLASS_NUMBER
+        edit_info_extension2.edit_info_box_value?.maxEms = 4
+        edit_info_extension2.edit_info_box_value?.filters = arrayOf<InputFilter>(InputFilterMinMax("0", "9999"))
+        disAbleDeptEdit(edit_info_dept.edit_info_box_value)
+
+        var fragment = this
+        edit_info_dept.edit_info_box_value?.setOnClickListener(object :OnSingleClickListener(){
+            override fun onSingleClick(v: View) {
+                  EditInfoContainerActivity.startSelectDeptFragment(fragment, REQUEST_CODE_SELECT_DEPT)
+            }
+        })
+
         edit_info_save.setOnClickListener(object :OnSingleClickListener(){
             override fun onSingleClick(v: View) {
                 startSaveInfo()
@@ -75,6 +99,25 @@ class EditCallCardFragment : BaseFragment() {
         })
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == REQUEST_CODE_SELECT_DEPT) {
+
+            }
+        }
+    }
+
+    private fun disAbleDeptEdit(deptEdit: EditText?) {
+        deptEdit?.apply {
+            isFocusable = false
+            isFocusableInTouchMode = false
+            isLongClickable = false
+            inputType = InputType.TYPE_NULL
+
+        }
+    }
+
     private fun startSaveInfo() {
         if (edit_info_name.desc.isEmpty()) {
             toastMsg("姓名不能为空。")
@@ -94,8 +137,9 @@ class EditCallCardFragment : BaseFragment() {
             PhoneInfoManager.instance.phoneInfo.insertPhoneItem(phoneBookItem)
             PhoneInfoManager.instance.phoneInfo.saveOrUpdate(requireContext())
             toastMsg("保存成功")
-            activity?.onBackPressed()
+            mActivity?.onBackPressed()
         }
+        LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(Intent(PhoneIntents.ACTION_MODIFY_CALL_CARD_SUCCESS))
 
     }
 
@@ -115,7 +159,7 @@ class EditCallCardFragment : BaseFragment() {
     }
 
     private fun initToolbar() {
-        activity?.hideLogo()
+        mActivity?.hideLogo()
         setToolbarTitle("编辑内部名片",true)
     }
 
@@ -126,13 +170,13 @@ class EditCallCardFragment : BaseFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is EditInfoContainerActivity) {
-            activity = context
+            mActivity = context
         }
     }
 
     override fun onDetach() {
         super.onDetach()
-        activity = null
+        mActivity = null
     }
 
 }

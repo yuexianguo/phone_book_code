@@ -31,6 +31,7 @@ class DeptListFragment : BaseFragment() {
     private var mMainActivity: MainActivity? = null
     private var adapterDept: DeptTreeAdapter? = null
     private var mTreeList: ArrayList<DeptTree> = ArrayList<DeptTree>();
+    private var isDeptUpdate: Boolean = false
     override val layoutId: Int
         get() = R.layout.fragment_dept_list
 
@@ -49,6 +50,7 @@ class DeptListFragment : BaseFragment() {
                 LogUtil.d("DeptListFragment, mReceiver action = ${it.action}")
                 when (it.action) {
                     PhoneIntents.ACTION_MODIFY_DEPT_SUCCESS -> {
+                        isDeptUpdate = true
                         updateDeptListUI()
                     }
                     PhoneIntents.ACTION_MODIFY_CALL_CARD_SUCCESS -> {
@@ -88,46 +90,49 @@ class DeptListFragment : BaseFragment() {
     @SuppressLint("NotifyDataSetChanged")
     override fun onResume() {
         super.onResume()
-
+        if (isDeptUpdate) {
+            adapterDept?.notifyDataSetChanged()
+            isDeptUpdate = false
+        }
     }
 
     fun updateDeptListUI() {
-        var tree = DeptTree(0, 0, "root", null, 0,false);
+        var tree = DeptTree(0, 0, "root", null, 0, false);
 
         if (PhoneInfoManager.instance.phoneInfo.phoneDepartItemList.isNotEmpty()) {
             val filterLevel1List = PhoneInfoManager.instance.phoneInfo.phoneDepartItemList.filter { it.level == 1 }
             LogUtil.d("filterLevel1List = $filterLevel1List")
             if (filterLevel1List.isNotEmpty()) {
                 for (phoneDepartItem in filterLevel1List) {
-                    var ti = DeptTree(phoneDepartItem.id, phoneDepartItem.pid, phoneDepartItem.name, tree, 1,false);
+                    var ti = DeptTree(phoneDepartItem.id, phoneDepartItem.pid, phoneDepartItem.name, tree, 1, false);
                     tree.child.add(ti);
                     val filterLevel2List = PhoneInfoManager.instance.phoneInfo.phoneDepartItemList.filter { it.pid == phoneDepartItem.id }.filter { it.level == 2 }
                     if (filterLevel2List.isNotEmpty()) {
                         for (phoneDepartItem2 in filterLevel2List) {
-                            var tii = DeptTree(phoneDepartItem2.id, phoneDepartItem2.pid, phoneDepartItem2.name, ti, 2,false);
+                            var tii = DeptTree(phoneDepartItem2.id, phoneDepartItem2.pid, phoneDepartItem2.name, ti, 2, false);
                             ti.child.add(tii);
                             val filterLevel3List = PhoneInfoManager.instance.phoneInfo.phoneDepartItemList.filter { it.pid == phoneDepartItem2.id }.filter { it.level == 3 }
                             if (filterLevel3List.isNotEmpty()) {
                                 for (phoneDepartItem3 in filterLevel3List) {
-                                    var ti3 = DeptTree(phoneDepartItem3.id, phoneDepartItem3.pid, phoneDepartItem3.name, tii, 3,false);
+                                    var ti3 = DeptTree(phoneDepartItem3.id, phoneDepartItem3.pid, phoneDepartItem3.name, tii, 3, false);
                                     tii.child.add(ti3);
 
                                     val filterLevel4List = PhoneInfoManager.instance.phoneInfo.phoneDepartItemList.filter { it.pid == phoneDepartItem3.id }.filter { it.level == 4 }
                                     if (filterLevel4List.isNotEmpty()) {
                                         for (phoneDepartItem4 in filterLevel4List) {
-                                            var ti4 = DeptTree(phoneDepartItem4.id, phoneDepartItem4.pid, phoneDepartItem4.name, ti3, 4,false);
+                                            var ti4 = DeptTree(phoneDepartItem4.id, phoneDepartItem4.pid, phoneDepartItem4.name, ti3, 4, false);
                                             ti3.child.add(ti4);
 
                                             val filterLevel5List = PhoneInfoManager.instance.phoneInfo.phoneDepartItemList.filter { it.pid == phoneDepartItem4.id }.filter { it.level == 5 }
                                             if (filterLevel5List.isNotEmpty()) {
                                                 for (phoneDepartItem5 in filterLevel5List) {
-                                                    var ti5 = DeptTree(phoneDepartItem5.id, phoneDepartItem5.pid, phoneDepartItem5.name, ti4, 5,false);
+                                                    var ti5 = DeptTree(phoneDepartItem5.id, phoneDepartItem5.pid, phoneDepartItem5.name, ti4, 5, false);
                                                     ti4.child.add(ti5);
 
                                                     val filterLevel6List = PhoneInfoManager.instance.phoneInfo.phoneDepartItemList.filter { it.pid == phoneDepartItem5.id }.filter { it.level == 6 }
                                                     if (filterLevel6List.isNotEmpty()) {
                                                         for (phoneDepartItem6 in filterLevel6List) {
-                                                            var ti6 = DeptTree(phoneDepartItem6.id, phoneDepartItem6.pid, phoneDepartItem6.name, ti5, 6,false);
+                                                            var ti6 = DeptTree(phoneDepartItem6.id, phoneDepartItem6.pid, phoneDepartItem6.name, ti5, 6, false);
                                                             ti5.child.add(ti6);
                                                         }
                                                     }
@@ -161,16 +166,23 @@ class DeptListFragment : BaseFragment() {
         }
     }
 
+    override fun onHiddenChanged(hidden: Boolean) {
+        super.onHiddenChanged(hidden)
+        if (!hidden) {
+
+        }
+    }
+
     private fun showBottomShootDialog() {
         val findFragmentByTag =
             childFragmentManager.findFragmentByTag(TAG_BOTTOM_SHOOT_DIALOG) as DeptBottomDialog?
         findFragmentByTag?.dismiss()
         val beginTransaction = childFragmentManager.beginTransaction()
         val currentTree = adapterDept?.currentDept
-        var phoneDepartItem:PhoneDepartItem? = null
+        var phoneDepartItem: PhoneDepartItem? = null
         currentTree?.also {
-                phoneDepartItem = PhoneDepartItem(it.id,it.pid,it.level,it.name)
-            }
+            phoneDepartItem = PhoneDepartItem(it.id, it.pid, it.level, it.name)
+        }
         adapterDept?.setOriginDeptPosition()
         beginTransaction.add(DeptBottomDialog.newInstance(phoneDepartItem), TAG_BOTTOM_SHOOT_DIALOG)
         beginTransaction.commitAllowingStateLoss()
@@ -190,6 +202,13 @@ class DeptListFragment : BaseFragment() {
     override fun onDetach() {
         super.onDetach()
         mMainActivity = null
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        context?.let {
+            LocalBroadcastManager.getInstance(it).unregisterReceiver(mReceiver)
+        }
     }
 
 }

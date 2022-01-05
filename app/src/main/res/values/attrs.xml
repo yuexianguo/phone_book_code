@@ -5,6 +5,7 @@
         <attr name="editInfoName" format="string|reference" />
         <attr name="editInfoDesc" format="string|reference" />
         <attr name="editInfoHint" format="string|reference" />
+        <attr name="editInfoMaxEms" format="integer" />
     </declare-styleable>
 
 </resources>

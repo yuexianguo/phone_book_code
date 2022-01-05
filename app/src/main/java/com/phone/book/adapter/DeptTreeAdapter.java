@@ -132,6 +132,9 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
     }
 
     private void expand(int pos) {
+        for (DeptTree deptTree : treeList.get(pos).child) {
+            deptTree.tag = false;
+        }
         treeList.addAll(pos + 1, treeList.get(pos).child);
     }
 

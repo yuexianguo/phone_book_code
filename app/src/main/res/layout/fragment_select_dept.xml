@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="@dimen/x30"
+    >
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/select_dept_recyclerView"
+        android:padding="@dimen/x50"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+
+    <Button
+        android:id="@+id/select_dept_save"
+        android:layout_width="@dimen/x120"
+        android:layout_height="@dimen/x60"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/x40"
+        android:layout_toLeftOf="@+id/select_dept_cancel"
+        android:background="@drawable/common_selector_btn_bg"
+        android:text="保存" />
+
+    <Button
+        android:id="@+id/select_dept_cancel"
+        android:layout_width="@dimen/x120"
+        android:layout_height="@dimen/x60"
+        android:text="取消"
+        android:layout_marginRight="@dimen/x60"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/common_selector_btn_bg"
+        />
+</RelativeLayout>

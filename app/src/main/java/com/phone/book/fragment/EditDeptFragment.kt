@@ -1,8 +1,11 @@
 package com.phone.book.fragment
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.phone.book.PhoneIntents
 import com.phone.book.R
 import com.phone.book.activity.EditInfoContainerActivity
 import com.phone.book.bean.PhoneDepartItem
@@ -17,7 +20,7 @@ const val TAG_TARGET_DEPART_ITEM = "tag_target_depart_item"
 
 class EditDeptFragment : BaseFragment() {
 
-    private var activity: EditInfoContainerActivity? = null
+    private var mActivity: EditInfoContainerActivity? = null
     private var currentDept: PhoneDepartItem? = null
     override val layoutId: Int
         get() = R.layout.fragment_edit_dept
@@ -81,14 +84,15 @@ class EditDeptFragment : BaseFragment() {
             PhoneInfoManager.instance.phoneInfo.insertDeptItem(phoneDepartItem)
             PhoneInfoManager.instance.phoneInfo.saveOrUpdate(requireContext())
             toastMsg("保存成功")
-            activity?.onBackPressed()
+            mActivity?.onBackPressed()
         } else {
             val phoneDepartItem = PhoneDepartItem(PhoneInfoManager.instance.phoneInfo.generateDeptId(), 0, 1, edit_dept_add_value.text.toString().trim())
             PhoneInfoManager.instance.phoneInfo.insertDeptItem(phoneDepartItem)
             PhoneInfoManager.instance.phoneInfo.saveOrUpdate(requireContext())
             toastMsg("保存成功")
-            activity?.onBackPressed()
+            mActivity?.onBackPressed()
         }
+        LocalBroadcastManager.getInstance(requireContext()).sendBroadcast(Intent(PhoneIntents.ACTION_MODIFY_DEPT_SUCCESS))
     }
 
     private fun hideUI() {
@@ -98,7 +102,7 @@ class EditDeptFragment : BaseFragment() {
     }
 
     private fun initToolbar() {
-        activity?.hideLogo()
+        mActivity?.hideLogo()
         setToolbarTitle("编辑部门", true)
     }
 
@@ -109,13 +113,13 @@ class EditDeptFragment : BaseFragment() {
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is EditInfoContainerActivity) {
-            activity = context
+            mActivity = context
         }
     }
 
     override fun onDetach() {
         super.onDetach()
-        activity = null
+        mActivity = null
     }
 
 }

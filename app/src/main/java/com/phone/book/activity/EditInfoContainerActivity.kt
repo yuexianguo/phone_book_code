@@ -37,6 +37,14 @@ class EditInfoContainerActivity : BaseActivity() {
                 context.startActivity(intent)
             }
         }
+        fun startSelectDeptFragment(fragment: Fragment?, requestCode: Int) {
+            if (fragment != null && fragment.context != null) {
+                val intent = Intent(fragment.context, EditInfoContainerActivity::class.java)
+                intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_SELECT_DEPT_FRAGMENT)
+                fragment.startActivityForResult(intent,requestCode)
+            }
+        }
+
     }
 
     override val layoutId: Int
@@ -67,6 +75,9 @@ class EditInfoContainerActivity : BaseActivity() {
                     val serializableExtra = intent.getSerializableExtra(TAG_TARGET_DEPART_ITEM)
                     val targetDept =  if (serializableExtra != null)serializableExtra as PhoneDepartItem else null
                     fragment = EditDeptFragment.newInstance(targetDept)
+                }
+                TAG_SELECT_DEPT_FRAGMENT -> {
+                    fragment = SelectDeptFragment.newInstance()
                 }
                 else -> {
                 }

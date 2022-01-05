@@ -51,8 +51,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:editInfoHint="请输入分机"
-            app:editInfoName="分机" />
+            app:editInfoHint="请输入分机(最多4位)"
+            app:editInfoName="分机"
+            app:editInfoMaxEms="4"
+            />
 
         <com.phone.book.view.EditInfoView
             android:id="@+id/edit_info_phone1"
@@ -85,8 +87,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:editInfoHint="请输入分机2"
-            app:editInfoName="分机" />
+            app:editInfoHint="请输入分机2(最多4位)"
+            app:editInfoName="分机"
+            app:editInfoMaxEms="4"
+            />
 
         <com.phone.book.view.EditInfoView
             android:id="@+id/edit_info_phone2"
