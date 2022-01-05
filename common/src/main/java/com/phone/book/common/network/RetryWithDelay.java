@@ -10,8 +10,8 @@ import io.reactivex.functions.Function;
 
 /**
  * description ：
- * author : Derik.Wu
- * email : Derik.Wu@waclighting.com.cn
+ * author : Andy
+ * email : 495311081@qq.com
  * date : 2020/8/19
  */
 public class RetryWithDelay implements

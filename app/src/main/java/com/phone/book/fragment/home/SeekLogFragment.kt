@@ -15,7 +15,7 @@ class SeekLogFragment : BaseFragment() {
     private var mMainActivity: MainActivity? = null
 
     override val layoutId: Int
-        get() = R.layout.fragment_dept_list
+        get() = R.layout.fragment_seek_call
 
     companion object {
         @JvmStatic

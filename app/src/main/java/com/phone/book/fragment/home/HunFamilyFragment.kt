@@ -14,7 +14,7 @@ class HunFamilyFragment : BaseFragment() {
     private var mMainActivity: MainActivity? = null
 
     override val layoutId: Int
-        get() = R.layout.fragment_dept_list
+        get() = R.layout.fragment_hun_family
 
     companion object {
         @JvmStatic

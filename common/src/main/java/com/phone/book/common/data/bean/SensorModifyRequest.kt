@@ -4,8 +4,8 @@ import com.phone.book.common.RequestActions
 
 /**
  * description ：
- * author : Derik.Wu
- * email : Derik.Wu@waclighting.com.cn
+ * author : Andy
+ * email : 495311081@qq.com
  * date : 2020/12/10
  */
 data class SensorModifyRequest(

@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.phone.book.R;
 import com.phone.book.bean.DeptTree;
+import com.phone.book.bean.PhoneDepartItem;
 
 import java.util.ArrayList;
 import java.util.Stack;
@@ -23,24 +24,20 @@ import java.util.Stack;
  */
 public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHolder> {
     ArrayList<DeptTree> treeList = new ArrayList<>();
-    ArrayList<DeptTree> originTreeList = new ArrayList<>();
     Context context;
     DeptTree pin;
+    OnDeptItemSelectListener onItemSelectListener = null;
     private int preSelectPos = 0;
 
     public DeptTreeAdapter(Context context, ArrayList<DeptTree> list) {
         this.context = context;
         treeList.clear();
         treeList.addAll(list);
-        originTreeList.clear();
-        originTreeList.addAll(list);
     }
 
     public void setNewList(ArrayList<DeptTree> list) {
         treeList.clear();
         treeList.addAll(list);
-        originTreeList.clear();
-        originTreeList.addAll(list);
     }
 
     @NonNull
@@ -54,6 +51,11 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
     public void onBindViewHolder(@NonNull DeptTreeAdapter.ViewHolder holder, int position) {
         if (preSelectPos == position) {
             holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(R.color.item_select_bg));
+            DeptTree deptTree = treeList.get(preSelectPos);
+            PhoneDepartItem phoneDepartItem = new PhoneDepartItem(deptTree.id, deptTree.pid, deptTree.level, deptTree.name);
+            if (onItemSelectListener != null) {
+                onItemSelectListener.onItemSelect(phoneDepartItem);
+            }
         } else {
             holder.itemView.setBackgroundColor(holder.itemView.getContext().getResources().getColor(android.R.color.transparent));
         }
@@ -88,6 +90,12 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
             }
             notifyDataSetChanged();
         });
+    }
+
+    public PhoneDepartItem getSelectPhoneDepartItem(){
+        DeptTree deptTree = treeList.get(preSelectPos);
+        PhoneDepartItem phoneDepartItem = new PhoneDepartItem(deptTree.id, deptTree.pid, deptTree.level, deptTree.name);
+        return phoneDepartItem;
     }
 
     public DeptTree getCurrentDept() {
@@ -158,4 +166,13 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
         }
 
     }
+
+    public interface OnDeptItemSelectListener{
+        void onItemSelect(PhoneDepartItem phoneDepartItem);
+    }
+
+    public void setDeptOnItemSelectListener(OnDeptItemSelectListener onItemSelectListener){
+        this.onItemSelectListener = onItemSelectListener;
+    }
+
 }

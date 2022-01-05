@@ -4,8 +4,8 @@ import androidx.lifecycle.LifecycleOwner
 
 /**
  * description ：
- * author : Derik.Wu
- * email : Derik.Wu@waclighting.com.cn
+ * author : Andy
+ * email : 495311081@qq.com
  * date : 2020/9/15
  */
 interface BaseView : LifecycleOwner {

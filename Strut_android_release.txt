@@ -1,7 +1,7 @@
 V1.0.1rc22
     Date	: 2021-04-02
 	Branch	: master/
-	Review	: Andy.Guo, Derik.Wu
+	Review	: Andy.Guo, Andy
 	Compatibility:
 		- IOTM:  >=01.01.0024
 		- SCM： >=01.11beta22
@@ -30,7 +30,7 @@ V1.0.1rc22
 V1.0.1rc21
     Date	: 2021-03-26
 	Branch	: master/
-	Review	: Andy.Guo, Derik.Wu
+	Review	: Andy.Guo, Andy
 	Compatibility:
 		- IOTM: 01.01.0023
 		- SCM：01.11
@@ -59,7 +59,7 @@ V1.0.1rc21
 v1.0.1rc20
     Date	: 2021-03-22
 	Branch	: master/
-	Review	: Andy.Guo, Derik.Wu
+	Review	: Andy.Guo, Andy
 	Compatibility:
 		- DCM：3.08
 		- SCM：01.11

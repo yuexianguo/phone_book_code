@@ -5,14 +5,13 @@
     android:gravity="center_vertical"
     android:layout_height="@dimen/x65">
     <TextView
-        android:id="@+id/adapter_item_dept_tag"
+        android:id="@+id/adapter_dept_phone_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/ItemTitle"
-        android:textSize="@dimen/x40"
         />
     <TextView
-        android:id="@+id/adapter_item_dept_name"
+        android:id="@+id/adapter_dept_phone_item_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/x20"

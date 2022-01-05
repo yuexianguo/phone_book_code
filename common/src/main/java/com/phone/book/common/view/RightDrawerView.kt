@@ -18,8 +18,8 @@ import com.phone.book.common.manager.BrainManager
 
 /**
  * description ：
- * author : Derik.Wu
- * email : Derik.Wu@waclighting.com.cn
+ * author : Andy
+ * email : 495311081@qq.com
  * date : 2020/9/28
  */
 class RightDrawerView(context: Context, attrs: AttributeSet?, defStyleAttr: Int) : ConstraintLayout(context, attrs, defStyleAttr) {

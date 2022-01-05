@@ -8,8 +8,8 @@ import com.phone.book.common.SINGLE_CLICK_EVENT_TIME
 
 /**
  * description ：single click and double click event
- * author : Derik.Wu
- * email : Derik.Wu@waclighting.com.cn
+ * author : Andy
+ * email : 495311081@qq.com
  * date : 2020/12/22
  */
 abstract class OnMultiClickListener : View.OnClickListener {
