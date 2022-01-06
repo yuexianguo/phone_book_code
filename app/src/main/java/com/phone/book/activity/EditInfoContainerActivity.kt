@@ -6,11 +6,14 @@ import android.os.Bundle
 import android.text.TextUtils
 import androidx.fragment.app.Fragment
 import com.phone.book.R
+import com.phone.book.bean.PhoneBookItem
 import com.phone.book.bean.PhoneDepartItem
 import com.phone.book.common.BaseActivity
-import com.phone.book.fragment.*
-import com.phone.book.fragment.home.HomeFragment
-import com.phone.book.fragment.home.TAG_HOME_FRAGMENT
+import com.phone.book.fragment.edit.*
+import com.phone.book.fragment.info.PhoneInfoFragment
+
+import com.phone.book.fragment.info.TAG_PHONE_INFO_FRAGMENT
+import com.phone.book.fragment.info.TAG_TARGET_PHONE_ITEM
 
 
 class EditInfoContainerActivity : BaseActivity() {
@@ -29,7 +32,7 @@ class EditInfoContainerActivity : BaseActivity() {
             }
         }
 
-        fun startEditDeptFragment(context: Context?,targetDept: PhoneDepartItem?) {
+        fun startEditDeptFragment(context: Context?, targetDept: PhoneDepartItem?) {
             if (context != null) {
                 val intent = Intent(context, EditInfoContainerActivity::class.java)
                 intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_EDIT_DEPT_FRAGMENT)
@@ -37,11 +40,21 @@ class EditInfoContainerActivity : BaseActivity() {
                 context.startActivity(intent)
             }
         }
+
         fun startSelectDeptFragment(fragment: Fragment?, requestCode: Int) {
             if (fragment != null && fragment.context != null) {
                 val intent = Intent(fragment.context, EditInfoContainerActivity::class.java)
                 intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_SELECT_DEPT_FRAGMENT)
-                fragment.startActivityForResult(intent,requestCode)
+                fragment.startActivityForResult(intent, requestCode)
+            }
+        }
+
+        fun startPhoneInfoPage(context: Context?, phoneItem: PhoneBookItem) {
+            if (context != null) {
+                val intent = Intent(context, EditInfoContainerActivity::class.java)
+                intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_PHONE_INFO_FRAGMENT)
+                intent.putExtra(TAG_TARGET_PHONE_ITEM, phoneItem)
+                context.startActivity(intent)
             }
         }
 
@@ -68,16 +81,21 @@ class EditInfoContainerActivity : BaseActivity() {
             when (target) {
                 TAG_EDIT_CALL_CARD_FRAGMENT -> {
                     val serializableExtra = intent.getSerializableExtra(TAG_TARGET_DEPART_ITEM)
-                    val targetDept =  if (serializableExtra != null)serializableExtra as PhoneDepartItem else null
+                    val targetDept = if (serializableExtra != null) serializableExtra as PhoneDepartItem else null
                     fragment = EditCallCardFragment.newInstance(targetDept)
                 }
                 TAG_EDIT_DEPT_FRAGMENT -> {
                     val serializableExtra = intent.getSerializableExtra(TAG_TARGET_DEPART_ITEM)
-                    val targetDept =  if (serializableExtra != null)serializableExtra as PhoneDepartItem else null
+                    val targetDept = if (serializableExtra != null) serializableExtra as PhoneDepartItem else null
                     fragment = EditDeptFragment.newInstance(targetDept)
                 }
                 TAG_SELECT_DEPT_FRAGMENT -> {
                     fragment = SelectDeptFragment.newInstance()
+                }
+                TAG_PHONE_INFO_FRAGMENT -> {
+                    val serializableExtra = intent.getSerializableExtra(TAG_TARGET_PHONE_ITEM)
+                    val phoneItem = if (serializableExtra != null) serializableExtra as PhoneBookItem else null
+                    fragment = PhoneInfoFragment.newInstance(phoneItem)
                 }
                 else -> {
                 }
@@ -89,7 +107,6 @@ class EditInfoContainerActivity : BaseActivity() {
             }
         }
     }
-
 
 
 }

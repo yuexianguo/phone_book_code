@@ -1,4 +1,4 @@
-package com.phone.book.fragment
+package com.phone.book.fragment.edit
 
 import android.content.Context
 import android.content.Intent

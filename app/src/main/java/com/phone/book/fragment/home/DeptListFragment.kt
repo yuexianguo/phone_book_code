@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.phone.book.PhoneIntents
 import com.phone.book.R
+import com.phone.book.activity.EditInfoContainerActivity
 import com.phone.book.activity.MainActivity
 import com.phone.book.adapter.DeptTreeAdapter
 import com.phone.book.bean.DeptTree
@@ -110,11 +111,11 @@ class DeptListFragment : BaseFragment() {
         adapterDept = DeptTreeAdapter(context, mTreeList)
         recyclerview_dept_list.adapter = adapterDept
 
-        recyclerview_dept_list_detail.layoutManager = GridLayoutManager(context,2)
+        recyclerview_dept_list_detail.layoutManager = GridLayoutManager(context, 2)
         deptPhoneListAdapter = DeptPhoneListAdapter(mDeptPhoneList)
         recyclerview_dept_list_detail.adapter = deptPhoneListAdapter
 
-        adapterDept?.setDeptOnItemSelectListener(object : DeptTreeAdapter.OnDeptItemSelectListener{
+        adapterDept?.setDeptOnItemSelectListener(object : DeptTreeAdapter.OnDeptItemSelectListener {
             override fun onItemSelect(phoneDepartItem: PhoneDepartItem?) {
                 phoneDepartItem?.apply {
                     val filter = PhoneInfoManager.instance.phoneInfo.phoneList.filter { it.department.id == this.id }
@@ -131,20 +132,28 @@ class DeptListFragment : BaseFragment() {
 
         })
 
+        deptPhoneListAdapter?.setOnItemClickListener(object :DeptPhoneListAdapter.OnItemClickListener{
+            override fun onItemClick(phoneItem: PhoneBookItem) {
+                EditInfoContainerActivity.startPhoneInfoPage(mMainActivity,phoneItem)
+            }
+        })
+
         updateDeptListUI()
 
     }
 
 
     class DeptPhoneListAdapter : RecyclerView.Adapter<DeptPhoneListAdapter.ViewHolder> {
-        private var mList:ArrayList<PhoneBookItem> = arrayListOf()
+        private var mList: ArrayList<PhoneBookItem> = arrayListOf()
+        private var listener: OnItemClickListener? = null
 
-        constructor(list: List<PhoneBookItem>){
+        constructor(list: List<PhoneBookItem>) {
             mList.clear()
             mList.addAll(list)
         }
+
         override fun getItemCount(): Int {
-           return mList.size
+            return mList.size
         }
 
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeptPhoneListAdapter.ViewHolder {
@@ -155,7 +164,13 @@ class DeptListFragment : BaseFragment() {
         override fun onBindViewHolder(holder: DeptPhoneListAdapter.ViewHolder, position: Int) {
             var phoneBookItem = mList[position]
             holder.tvName.text = phoneBookItem.name
-            holder.tvNumber.text = if (phoneBookItem.extension1.isNotEmpty()) phoneBookItem.extension1 else if (phoneBookItem.extension2.isNotEmpty())phoneBookItem.extension2 else ""
+            holder.tvNumber.text = if (phoneBookItem.extension1.isNotEmpty()) phoneBookItem.extension1 else if (phoneBookItem.extension2.isNotEmpty()) phoneBookItem.extension2 else ""
+            holder.itemView.setOnClickListener(object :OnSingleClickListener(){
+                override fun onSingleClick(v: View) {
+                    listener?.onItemClick(phoneBookItem)
+                }
+
+            })
         }
 
         fun setList(mDeptPhoneList: List<PhoneBookItem>) {
@@ -170,11 +185,18 @@ class DeptListFragment : BaseFragment() {
             init {
                 tvName = itemView.findViewById(R.id.adapter_dept_phone_item_name)
                 tvNumber = itemView.findViewById(R.id.adapter_dept_phone_item_number)
+
             }
+
         }
 
+        interface OnItemClickListener {
+            fun onItemClick(phoneItem:PhoneBookItem)
+        }
 
-
+        fun setOnItemClickListener(clickListener: OnItemClickListener) {
+            this.listener = clickListener
+        }
 
     }
 
