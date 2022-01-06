@@ -12,7 +12,6 @@ import com.phone.book.activity.EditInfoContainerActivity
 import com.phone.book.bean.PhoneDepartItem
 import com.phone.book.common.dialog.BaseDialogFragment
 import com.phone.book.common.listener.OnSingleClickListener
-import com.phone.book.fragment.TAG_TARGET_DEPART_ITEM
 
 
 /**

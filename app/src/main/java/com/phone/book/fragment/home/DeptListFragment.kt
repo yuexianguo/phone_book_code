@@ -25,7 +25,6 @@ import com.phone.book.bean.DeptTree
 import com.phone.book.bean.PhoneBookItem
 import com.phone.book.bean.PhoneDepartItem
 import com.phone.book.common.BaseFragment
-import com.phone.book.common.adapter.CustomBaseAdapter2
 import com.phone.book.common.listener.OnSingleClickListener
 import com.phone.book.common.utils.LogUtil
 import com.phone.book.dialog.DeptBottomDialog

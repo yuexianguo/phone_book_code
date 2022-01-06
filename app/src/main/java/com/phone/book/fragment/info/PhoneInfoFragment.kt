@@ -20,9 +20,14 @@ class PhoneInfoFragment : BaseFragment() {
     private var phoneItem: PhoneBookItem? = null
     private var phoneList: ArrayList<PhoneBookItem>? = arrayListOf()
     private var phoneInfoAdapter: PhoneInfoAdapter?= null
+
+    private var itemsValueList:ArrayList<String>?=null
+
+    private var itemsNameList:ArrayList<String> = ["分机 ：","分机 ：","手机 ：","手机 ：","电话 ：","电话 ：","宅电 ：","传真 ：","邮件 ：","备注 ："]
+
+
     override val layoutId: Int
         get() = R.layout.fragment_phone_info
-
     companion object {
         @JvmStatic
         fun newInstance(phoneItem: PhoneBookItem?) =
@@ -38,30 +43,31 @@ class PhoneInfoFragment : BaseFragment() {
         arguments?.also {
             val serializableExtra = it.getSerializable(TAG_TARGET_PHONE_ITEM)
             phoneItem = if (serializableExtra != null) serializableExtra as PhoneBookItem else null
+            itemsValueList = [phoneItem.extension1,phoneItem.extension2,phoneItem.phone1,phoneItem.phone2,phoneItem.home_phone,phoneItem.fax,phoneItem.email,phoneItem.remarks]
         }
     }
 
 
     override fun initViews() {
         phone_info_recyclerView.layoutManager = GridLayoutManager(context,2)
-        phoneInfoAdapter = PhoneInfoAdapter(R.layout.adapter_item_phone_info, phoneList)
+        phoneInfoAdapter = PhoneInfoAdapter(R.layout.adapter_item_phone_info, itemsValueList)
         phone_info_recyclerView.adapter = phoneInfoAdapter
     }
 
     override fun lazyFetchData() {
     }
 
-    inner class PhoneInfoAdapter(layoutId: Int, list: ArrayList<PhoneBookItem>?) : CustomBaseAdapter<PhoneBookItem, PhoneInfoAdapter.PhoneInfoHolder>(layoutId, list) {
+    inner class PhoneInfoAdapter(layoutId: Int, list: ArrayList<String>) : CustomBaseAdapter<String, PhoneInfoAdapter.PhoneInfoHolder>(layoutId, list) {
         override fun onCreateCustomViewHolder(view: View): PhoneInfoHolder {
             return PhoneInfoHolder(view)
         }
 
-        override fun onBindCustomViewHolder(vh: PhoneInfoHolder, t: PhoneBookItem?) {
+        override fun onBindCustomViewHolder(vh: PhoneInfoHolder, value: String) {
 
         }
 
         inner class PhoneInfoHolder(itemView: View):CustomBaseHolder(itemView){
-
+//            itemView.fin
         }
     }
 
