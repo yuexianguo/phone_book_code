@@ -11,8 +11,8 @@ android {
         applicationId "com.phone.book"
         minSdkVersion rootProject.min_sdk_version
         targetSdkVersion rootProject.target_sdk_version
-        versionCode 7
-        versionName "1.2.0rc6"
+        versionCode 1
+        versionName "1.0.0rc1"
         archivesBaseName = "PhoneBook"
 
         buildConfigField("boolean", "isOneOneVer", "false")

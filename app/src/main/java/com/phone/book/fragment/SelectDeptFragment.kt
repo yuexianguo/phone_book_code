@@ -47,7 +47,7 @@ class SelectDeptFragment : BaseFragment() {
         select_dept_recyclerView.layoutManager = LinearLayoutManager(context)
         mAdapter = DeptTreeAdapter(context, mTreeList)
         select_dept_recyclerView.adapter = mAdapter
-        updateDeptListUI()
+
 
         select_dept_save.setOnClickListener(object :OnSingleClickListener(){
             override fun onSingleClick(v: View) {
@@ -64,6 +64,11 @@ class SelectDeptFragment : BaseFragment() {
                 mActivity?.onBackPressed()
             }
         })
+    }
+
+    override fun onResume() {
+        super.onResume()
+        updateDeptListUI()
     }
     
     private fun initToolbar() {

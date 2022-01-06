@@ -67,6 +67,19 @@ class DeptListFragment : BaseFragment() {
                         updateDeptListUI()
                     }
                     PhoneIntents.ACTION_MODIFY_CALL_CARD_SUCCESS -> {
+                        val currentDept = adapterDept?.currentDept
+                        mMainActivity?.apply {
+                            currentDept?.apply {
+                                val filter = PhoneInfoManager.instance.phoneInfo.phoneList.filter { it.department.id == this.id }
+                                mDeptPhoneList.clear()
+                                mDeptPhoneList.addAll(filter)
+                                deptPhoneListAdapter?.setList(filter)
+                                handler.post(Runnable {
+                                    deptPhoneListAdapter?.notifyDataSetChanged()
+                                })
+                            }
+
+                        }
 
                     }
                     else -> {
