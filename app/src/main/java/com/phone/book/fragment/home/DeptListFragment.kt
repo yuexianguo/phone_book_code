@@ -65,6 +65,9 @@ class DeptListFragment : BaseFragment() {
                     PhoneIntents.ACTION_MODIFY_DEPT_SUCCESS -> {
                         isDeptUpdate = true
                         updateDeptListUI()
+                        mMainActivity?.apply {
+                            adapterDept?.notifyDataSetChanged()
+                        }
                     }
                     PhoneIntents.ACTION_MODIFY_CALL_CARD_SUCCESS -> {
                         val currentDept = adapterDept?.currentDept

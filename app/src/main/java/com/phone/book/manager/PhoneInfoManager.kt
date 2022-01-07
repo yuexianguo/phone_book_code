@@ -30,4 +30,5 @@ class PhoneInfoManager {
             phoneInfo = Gson().fromJson(configObj, PhoneBookInfo::class.java)
         }
     }
+
 }

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/fragment_padding"
     android:background="@color/white"
     android:orientation="vertical"
     >
@@ -13,6 +14,7 @@
         android:gravity="center_vertical"
         >
         <ImageView
+            android:id="@+id/iv_phone_info_head"
             android:layout_width="@dimen/x200"
             android:layout_height="@dimen/x200"
             android:src="@mipmap/icon_man"
@@ -45,6 +47,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/phone_info_work"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="员工"
@@ -58,6 +61,6 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/phone_info_recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="match_parent"/>
 
 </LinearLayout>

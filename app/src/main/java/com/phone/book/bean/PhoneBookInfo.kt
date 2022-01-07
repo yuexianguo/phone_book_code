@@ -8,7 +8,10 @@ import com.phone.book.utils.PhoneFileUtils.FILE_NAME
 import java.io.File
 import java.io.Serializable
 
-class PhoneBookInfo:Serializable {
+const val TYPE_MAN = "男士"
+const val TYPE_WOMAN = "女士"
+
+class PhoneBookInfo : Serializable {
     var phoneList: ArrayList<PhoneBookItem> = arrayListOf()
     var phoneDepartItemList: ArrayList<PhoneDepartItem> = arrayListOf()
 
@@ -23,22 +26,109 @@ class PhoneBookInfo:Serializable {
         PhoneFileUtils.copyPrivateToDocuments(context, File(context.filesDir, FILE_NAME).absolutePath)
     }
 
-    fun insertPhoneItem(phoneBookItem:PhoneBookItem){
+    fun insertPhoneItem(phoneBookItem: PhoneBookItem) {
         phoneList.add(phoneBookItem)
     }
 
-    fun insertDeptItem(phoneDepartItem:PhoneDepartItem){
+    fun insertDeptItem(phoneDepartItem: PhoneDepartItem) {
         phoneDepartItemList.add(phoneDepartItem)
     }
 
     //for create PhoneBookItem only
     fun generatePhoneId(): Long {
-        return if (phoneList.size == 0) 1 else (phoneList.size +1).toLong()
+        return if (phoneList.size == 0) 1 else (phoneList.size + 1).toLong()
     }
 
     //for create DepartItem only
     fun generateDeptId(): Long {
-        return if (phoneDepartItemList.size == 0) 1 else (phoneDepartItemList.size +1).toLong()
+        return if (phoneDepartItemList.size == 0) 1 else (phoneDepartItemList.size + 1).toLong()
+    }
+
+    fun getPhoneBookItem(id: Long): PhoneBookItem? {
+        var targetItem: PhoneBookItem? = null
+        for (phoneBookItem in phoneList) {
+            if (phoneBookItem.id == id) {
+                targetItem = phoneBookItem
+            }
+        }
+        return targetItem
+    }
+
+    fun getPhoneDepartItem(id: Long): PhoneDepartItem? {
+        var targetItem: PhoneDepartItem? = null
+        for (phoneDepartItem in phoneDepartItemList) {
+            if (phoneDepartItem.id == id) {
+                targetItem = phoneDepartItem
+            }
+        }
+        return targetItem
+    }
+
+    fun deleteDept(id: Long) {
+        if (phoneDepartItemList.isNotEmpty()) {
+            var deleteIds = arrayListOf<Long>()
+            deleteIds.add(id)
+            var targetId = id
+            for (phoneDepartItem in phoneDepartItemList) {
+                //1层子类
+                if (targetId == phoneDepartItem.pid) {
+                    deleteIds.add(phoneDepartItem.id)
+                    targetId = phoneDepartItem.id
+                    for (phoneDepartItem in phoneDepartItemList) {
+                        //2层
+                        if (targetId == phoneDepartItem.pid) {
+                            deleteIds.add(phoneDepartItem.id)
+                            targetId = phoneDepartItem.id
+
+                            for (phoneDepartItem in phoneDepartItemList) {
+                                //3层
+                                if (targetId == phoneDepartItem.pid) {
+                                    deleteIds.add(phoneDepartItem.id)
+                                    targetId = phoneDepartItem.id
+
+                                    for (phoneDepartItem in phoneDepartItemList) {
+                                        //4层
+                                        if (targetId == phoneDepartItem.pid) {
+                                            deleteIds.add(phoneDepartItem.id)
+                                            targetId = phoneDepartItem.id
+
+                                            for (phoneDepartItem in phoneDepartItemList) {
+                                                //5层
+                                                if (targetId == phoneDepartItem.pid) {
+                                                    deleteIds.add(phoneDepartItem.id)
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                            }
+                        }
+
+                    }
+
+                }
+            }
+
+            val iterator = phoneDepartItemList.iterator()
+            while (iterator.hasNext()) {
+                val next = iterator.next()
+                if (deleteIds.contains(next.id)){
+                    iterator.remove()
+                }
+            }
+            val iterator1 = phoneList.iterator()
+            while (iterator1.hasNext()) {
+                    iterator1.next().department?.apply {
+                        if (deleteIds.contains(id)) {
+                            iterator1.remove()
+                        }
+                    }
+
+            }
+
+
+        }
     }
 }
 
@@ -59,7 +149,9 @@ class PhoneBookItem : Serializable {
     var email: String = "";
     var sex: String = "";//"男士" "女士;
     var remarks: String = "";
-    constructor(id: Long, name: String, department: PhoneDepartItem, work: String,
+
+    constructor(
+        id: Long, name: String, department: PhoneDepartItem, work: String,
         extension1: String, phone1: String, call1: String, extension2: String, phone2: String, call2: String,
         home_phone: String, fax: String, area_code: String, email: String, sex: String, remarks: String
     ) {
@@ -82,11 +174,11 @@ class PhoneBookItem : Serializable {
     }
 }
 
-class PhoneDepartItem: Serializable{
-    var id : Long;
-    var pid : Long;
-    var level : Int;
-    var name : String;
+class PhoneDepartItem : Serializable {
+    var id: Long;
+    var pid: Long;
+    var level: Int;
+    var name: String;
 
     constructor(id: Long, pid: Long, level: Int, name: String) {
         this.id = id

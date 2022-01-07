@@ -15,13 +15,13 @@ import com.phone.book.R
 import com.phone.book.activity.EditInfoContainerActivity
 import com.phone.book.bean.PhoneBookItem
 import com.phone.book.bean.PhoneDepartItem
+import com.phone.book.bean.TYPE_MAN
+import com.phone.book.bean.TYPE_WOMAN
 import com.phone.book.common.BaseFragment
 import com.phone.book.common.listener.OnSingleClickListener
 import com.phone.book.common.utils.LogUtil
 import com.phone.book.dialog.HeadSelectDialog
 import com.phone.book.dialog.TAG_HEAD_SELECT_DIALOG
-import com.phone.book.dialog.TYPE_MAN
-import com.phone.book.dialog.TYPE_WOMAN
 import com.phone.book.manager.PhoneInfoManager
 import com.phone.book.utils.InputFilterMinMax
 import kotlinx.android.synthetic.main.fragment_edit_call_card.*

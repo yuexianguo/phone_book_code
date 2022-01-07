@@ -10,6 +10,8 @@ import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.phone.book.R
 import com.phone.book.activity.EditInfoContainerActivity
+import com.phone.book.bean.TYPE_MAN
+import com.phone.book.bean.TYPE_WOMAN
 import com.phone.book.common.dialog.BaseDialogFragment
 import com.phone.book.common.listener.OnSingleClickListener
 
@@ -22,8 +24,7 @@ import com.phone.book.common.listener.OnSingleClickListener
  */
 
 const val TAG_HEAD_SELECT_DIALOG = "tag_head_select_dialog"
-const val TYPE_MAN = "男士"
-const val TYPE_WOMAN = "女士"
+
 class HeadSelectDialog(private val listener: ((type:String) -> Unit)?) : BaseDialogFragment() {
     companion object {
         @JvmStatic
