@@ -9,9 +9,10 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        tools:ignore="ScopedStorage" />
 
     <application
         android:name=".MyApplication"
@@ -23,21 +24,28 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:allowBackup">
-
         <activity
-            android:name=".activity.MainActivity"
+            android:name=".activity.SplashActivity"
+            android:exported="true"
             android:launchMode="singleTask"
-            android:screenOrientation="landscape">
+            android:screenOrientation="landscape"
+            >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".activity.MainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape">
 
-        <activity android:name=".activity.EditInfoContainerActivity"
-            android:screenOrientation="landscape"
-            />
+        </activity>
+        <activity
+            android:name=".activity.EditInfoContainerActivity"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>

@@ -22,6 +22,7 @@ class PhoneInfoManager {
     }
 
     private fun initPhoneInfo() {
+        PhoneFileUtils.initPublicFileToAppFile(context,File(context.filesDir, PhoneFileUtils.FILE_NAME).absolutePath)
         val configObj = FileSystem.readString(File(context.filesDir, PhoneFileUtils.FILE_NAME))
         if (configObj == null || configObj.isEmpty()) {
             phoneInfo = PhoneBookInfo.createNewMesh()

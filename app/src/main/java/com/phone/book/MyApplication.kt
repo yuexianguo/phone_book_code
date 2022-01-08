@@ -7,6 +7,6 @@ class MyApplication : BaseApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        PhoneInfoManager.instance.init(this)
+
     }
 }

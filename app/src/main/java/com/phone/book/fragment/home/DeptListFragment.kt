@@ -1,10 +1,12 @@
 package com.phone.book.fragment.home
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -12,6 +14,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -30,7 +34,6 @@ import com.phone.book.common.utils.LogUtil
 import com.phone.book.dialog.DeptBottomDialog
 import com.phone.book.manager.PhoneInfoManager
 import kotlinx.android.synthetic.main.fragment_dept_list.*
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -45,10 +48,15 @@ class DeptListFragment : BaseFragment() {
     private var mDeptPhoneList: ArrayList<PhoneBookItem> = ArrayList<PhoneBookItem>();
     private var isDeptUpdate: Boolean = false
     private var handler = Handler(Looper.getMainLooper())
+
+    private var currentSelectDepartItem: PhoneDepartItem? = null
+
+
     override val layoutId: Int
         get() = R.layout.fragment_dept_list
 
     companion object {
+        private const val REQUES_READ_WRITE_CODE = 0x01
         @JvmStatic
         fun newInstance() =
             DeptListFragment().apply {
@@ -65,15 +73,15 @@ class DeptListFragment : BaseFragment() {
                     PhoneIntents.ACTION_MODIFY_DEPT_SUCCESS -> {
                         isDeptUpdate = true
                         updateDeptListUI()
-                        mMainActivity?.apply {
+                        getContext()?.apply {
                             adapterDept?.notifyDataSetChanged()
                         }
                     }
                     PhoneIntents.ACTION_MODIFY_CALL_CARD_SUCCESS -> {
-                        val currentDept = adapterDept?.currentDept
-                        mMainActivity?.apply {
+                        val currentDept = currentSelectDepartItem
+                        getContext()?.apply {
                             currentDept?.apply {
-                                val filter = PhoneInfoManager.instance.phoneInfo.phoneList.filter { it.department.id == this.id }
+                                val filter = PhoneInfoManager.instance.phoneInfo.phoneList.filter { it -> it.department.id == this.id }
                                 mDeptPhoneList.clear()
                                 mDeptPhoneList.addAll(filter)
                                 deptPhoneListAdapter?.setList(filter)
@@ -119,6 +127,7 @@ class DeptListFragment : BaseFragment() {
 
         adapterDept?.setDeptOnItemSelectListener(object : DeptTreeAdapter.OnDeptItemSelectListener {
             override fun onItemSelect(phoneDepartItem: PhoneDepartItem?) {
+                currentSelectDepartItem = phoneDepartItem
                 phoneDepartItem?.apply {
                     val filter = PhoneInfoManager.instance.phoneInfo.phoneList.filter { it.department.id == this.id }
                     mDeptPhoneList.clear()
@@ -134,9 +143,9 @@ class DeptListFragment : BaseFragment() {
 
         })
 
-        deptPhoneListAdapter?.setOnItemClickListener(object :DeptPhoneListAdapter.OnItemClickListener{
+        deptPhoneListAdapter?.setOnItemClickListener(object : DeptPhoneListAdapter.OnItemClickListener {
             override fun onItemClick(phoneItem: PhoneBookItem) {
-                EditInfoContainerActivity.startPhoneInfoPage(mMainActivity,phoneItem)
+                EditInfoContainerActivity.startPhoneInfoPage(mMainActivity, phoneItem)
             }
         })
 
@@ -167,7 +176,7 @@ class DeptListFragment : BaseFragment() {
             var phoneBookItem = mList[position]
             holder.tvName.text = phoneBookItem.name
             holder.tvNumber.text = if (phoneBookItem.extension1.isNotEmpty()) phoneBookItem.extension1 else if (phoneBookItem.extension2.isNotEmpty()) phoneBookItem.extension2 else ""
-            holder.itemView.setOnClickListener(object :OnSingleClickListener(){
+            holder.itemView.setOnClickListener(object : OnSingleClickListener() {
                 override fun onSingleClick(v: View) {
                     listener?.onItemClick(phoneBookItem)
                 }
@@ -193,7 +202,7 @@ class DeptListFragment : BaseFragment() {
         }
 
         interface OnItemClickListener {
-            fun onItemClick(phoneItem:PhoneBookItem)
+            fun onItemClick(phoneItem: PhoneBookItem)
         }
 
         fun setOnItemClickListener(clickListener: OnItemClickListener) {
@@ -209,6 +218,17 @@ class DeptListFragment : BaseFragment() {
             adapterDept?.notifyDataSetChanged()
             isDeptUpdate = false
         }
+        checkPermisson()
+    }
+
+    private fun checkPermisson() {
+        mMainActivity?.also {
+            if (ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
+                    it, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(it, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), REQUES_READ_WRITE_CODE);
+            }
+        }
+
     }
 
     fun updateDeptListUI() {
@@ -285,13 +305,8 @@ class DeptListFragment : BaseFragment() {
             childFragmentManager.findFragmentByTag(TAG_BOTTOM_SHOOT_DIALOG) as DeptBottomDialog?
         findFragmentByTag?.dismiss()
         val beginTransaction = childFragmentManager.beginTransaction()
-        val currentTree = adapterDept?.currentDept
-        var phoneDepartItem: PhoneDepartItem? = null
-        currentTree?.also {
-            phoneDepartItem = PhoneDepartItem(it.id, it.pid, it.level, it.name)
-        }
         adapterDept?.setOriginDeptPosition()
-        beginTransaction.add(DeptBottomDialog.newInstance(phoneDepartItem), TAG_BOTTOM_SHOOT_DIALOG)
+        beginTransaction.add(DeptBottomDialog.newInstance(currentSelectDepartItem), TAG_BOTTOM_SHOOT_DIALOG)
         beginTransaction.commitAllowingStateLoss()
     }
 

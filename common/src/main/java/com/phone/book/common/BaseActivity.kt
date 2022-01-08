@@ -467,6 +467,7 @@ abstract class BaseActivity : AppCompatActivity(), OperationCallback, BaseView {
         if (mHud == null) {
             mHud = KProgressHUD.create(this)
                     .setStyle(KProgressHUD.Style.SPIN_INDETERMINATE)
+                .setBackgroundColor(R.color.colorGrayDark)
                     .setAnimationSpeed(1)
                     .setDimAmount(0.5f)
         }

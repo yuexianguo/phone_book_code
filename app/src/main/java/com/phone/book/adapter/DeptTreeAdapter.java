@@ -98,9 +98,9 @@ public class DeptTreeAdapter extends RecyclerView.Adapter<DeptTreeAdapter.ViewHo
         return phoneDepartItem;
     }
 
-    public DeptTree getCurrentDept() {
-        return treeList.size() > preSelectPos ? treeList.get(preSelectPos) : null;
-    }
+//    public DeptTree getCurrentDept() {
+//        return ..
+//    }
 
     private String getExpandEmpty(Integer level) {
         String baseEmpty = "    ";

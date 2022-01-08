@@ -54,6 +54,71 @@ public class PhoneFileUtils {
 
     }
 
+    public static void initPublicFileToAppFile(Context context, String targetPath){
+//        String filePath = "Download/PhoneTest/";
+        String queryPathKey = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+
+            queryPathKey = MediaStore.Files.FileColumns.RELATIVE_PATH;
+
+            String selection = queryPathKey + "=? and " + MediaStore.Files.FileColumns.DISPLAY_NAME + "=?";
+            Cursor cursor = context.getContentResolver().query(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL),
+                    new String[]{MediaStore.Files.FileColumns._ID, queryPathKey, MediaStore.Files.FileColumns.DISPLAY_NAME},
+                    selection,
+                    new String[]{DIR_NAME, FILE_NAME},
+                    null);
+
+
+            OutputStream ost = null;
+            try {
+                ost = new FileOutputStream(new File(targetPath));
+                if (cursor != null && cursor.moveToFirst()) {
+                    //媒体数据库中查询到的文件id
+                    int columnId = cursor.getColumnIndex(MediaStore.Images.Media._ID);
+                    do {
+                        //通过mediaId获取它的uri
+                        int mediaId = cursor.getInt(columnId);
+                        Uri itemUri = null;
+                        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+                            itemUri = Uri.withAppendedPath(MediaStore.Downloads.EXTERNAL_CONTENT_URI, "" + mediaId);
+                        }
+                        try {
+                            //通过uri获取到inputStream
+                            ContentResolver cr = context.getContentResolver();
+                            InputStream ins = cr.openInputStream(itemUri);
+//                            insList.add(ins);
+
+                            if (ost != null) {
+                                byte[] buffer = new byte[4096];
+                                int byteCount = 0;
+                                while ((byteCount = ins.read(buffer)) != -1) {  // 循环从输入流读取 buffer字节
+                                    ost.write(buffer, 0, byteCount);        // 将读取的输入流写入到输出流
+                                }
+                                // write what you want
+                            }
+
+                        } catch (FileNotFoundException e) {
+                            e.printStackTrace();
+                        }
+
+                    } while (cursor.moveToNext());
+                }
+
+            } catch (IOException e) {
+                //Log.i("copyPrivateToDownload--","fail: " + e.getCause());
+            } finally {
+                try {
+
+                    if (ost != null) {
+                        ost.close();
+                    }
+                } catch (IOException e) {
+                    //Log.i("copyPrivateToDownload--","fail in close: " + e.getCause());
+                }
+            }
+        }
+    }
+
 
     public static void copyPrivateToDocuments(Context context, String orgFilePath) {
         listAndDeleteFiles(context);

@@ -9,6 +9,7 @@ import com.phone.book.common.BaseActivity
 import com.phone.book.common.utils.ActivityUtils.replaceFragment
 import com.phone.book.fragment.home.HomeFragment
 import com.phone.book.fragment.home.TAG_HOME_FRAGMENT
+import com.phone.book.manager.PhoneInfoManager
 
 
 class MainActivity : BaseActivity() {
@@ -22,6 +23,7 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        PhoneInfoManager.instance.init(this)
         if (savedInstanceState == null) {
             startHomeFragment(false)
         }
