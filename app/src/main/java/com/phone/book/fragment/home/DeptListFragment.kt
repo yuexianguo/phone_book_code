@@ -333,4 +333,10 @@ class DeptListFragment : BaseFragment() {
         handler.removeCallbacksAndMessages(null)
     }
 
+    fun refreshInit() {
+        if (mMainActivity != null && isAdded) {
+            updateDeptListUI()
+        }
+    }
+
 }

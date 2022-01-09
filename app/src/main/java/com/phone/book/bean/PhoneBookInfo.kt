@@ -1,6 +1,8 @@
 package com.phone.book.bean
 
 import android.content.Context
+import android.os.Build
+import android.os.Environment
 import com.google.gson.Gson
 import com.phone.book.utils.FileSystem
 import com.phone.book.utils.PhoneFileUtils
@@ -16,14 +18,20 @@ class PhoneBookInfo : Serializable {
     var phoneDepartItemList: ArrayList<PhoneDepartItem> = arrayListOf()
 
     companion object {
-        fun createNewMesh(): PhoneBookInfo {
+        fun createNewInstance(): PhoneBookInfo {
             return PhoneBookInfo()
         }
     }
 
     fun saveOrUpdate(context: Context) {
         FileSystem.writeString(context.filesDir, FILE_NAME, Gson().toJson(this))
-        PhoneFileUtils.copyPrivateToDocuments(context, File(context.filesDir, FILE_NAME).absolutePath)
+        if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
+            //android 9 以下
+            val storagePublicDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+            FileSystem.writeString(storagePublicDirectory, FILE_NAME, Gson().toJson(this))
+        } else {
+            PhoneFileUtils.copyPrivateToDocuments(context, File(context.filesDir, FILE_NAME).absolutePath)
+        }
     }
 
     fun insertPhoneItem(phoneBookItem: PhoneBookItem) {
@@ -113,17 +121,17 @@ class PhoneBookInfo : Serializable {
             val iterator = phoneDepartItemList.iterator()
             while (iterator.hasNext()) {
                 val next = iterator.next()
-                if (deleteIds.contains(next.id)){
+                if (deleteIds.contains(next.id)) {
                     iterator.remove()
                 }
             }
             val iterator1 = phoneList.iterator()
             while (iterator1.hasNext()) {
-                    iterator1.next().department?.apply {
-                        if (deleteIds.contains(id)) {
-                            iterator1.remove()
-                        }
+                iterator1.next().department?.apply {
+                    if (deleteIds.contains(id)) {
+                        iterator1.remove()
                     }
+                }
 
             }
 

@@ -8,6 +8,7 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,14 +23,15 @@ import java.util.List;
 public class PhoneFileUtils {
     public static final String DIR_NAME = "Download/PhoneTest/";
     public static final String FILE_NAME = "MyPhoneInfo.txt";
+
     public static void listAndDeleteFiles(Context context) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             String queryPathKey = MediaStore.Files.FileColumns.RELATIVE_PATH;
-            String selection = queryPathKey + "=? and " + MediaStore.Files.FileColumns.DISPLAY_NAME + "=?";
+            String selection = queryPathKey + "=?";
             Cursor cursor = context.getContentResolver().query(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL),
-                    new String[]{MediaStore.Files.FileColumns._ID, queryPathKey, MediaStore.Files.FileColumns.DISPLAY_NAME},
+                    new String[]{MediaStore.Files.FileColumns._ID, queryPathKey},
                     selection,
-                    new String[]{DIR_NAME, FILE_NAME},
+                    new String[]{DIR_NAME},
                     null);
             try {
                 if (cursor != null && cursor.moveToFirst()) {
@@ -39,10 +41,10 @@ public class PhoneFileUtils {
                         //通过mediaId获取它的uri
                         int mediaId = cursor.getInt(columnId);
                         Uri itemUri = null;
-                            itemUri = Uri.withAppendedPath(MediaStore.Downloads.EXTERNAL_CONTENT_URI, "" + mediaId);
-                            //通过uri获取到inputStream
-                            ContentResolver cr = context.getContentResolver();
-                            cr.delete(itemUri,null,null);
+                        itemUri = Uri.withAppendedPath(MediaStore.Downloads.EXTERNAL_CONTENT_URI, "" + mediaId);
+                        //通过uri获取到inputStream
+                        ContentResolver cr = context.getContentResolver();
+                        cr.delete(itemUri, null, null);
 
                     } while (cursor.moveToNext());
                 }
@@ -54,10 +56,10 @@ public class PhoneFileUtils {
 
     }
 
-    public static void initPublicFileToAppFile(Context context, String targetPath){
+    public static void initPublicFileToAppFile(Context context, String targetPath) {
 //        String filePath = "Download/PhoneTest/";
-        String queryPathKey = null;
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
+            String queryPathKey = null;
 
             queryPathKey = MediaStore.Files.FileColumns.RELATIVE_PATH;
 
@@ -116,6 +118,12 @@ public class PhoneFileUtils {
                     //Log.i("copyPrivateToDownload--","fail in close: " + e.getCause());
                 }
             }
+        } else {
+            //android 9以下
+            String stringResult = FileSystem.readString(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), FILE_NAME));
+            if (!TextUtils.isEmpty(stringResult)) {
+                FileSystem.writeString(context.getFilesDir(), FILE_NAME, stringResult);
+            }
         }
     }
 
@@ -167,6 +175,7 @@ public class PhoneFileUtils {
                 //Log.i("copyPrivateToDownload--","fail in close: " + e.getCause());
             }
         }
+
     }
 
     //在公共文件夹下查询图片

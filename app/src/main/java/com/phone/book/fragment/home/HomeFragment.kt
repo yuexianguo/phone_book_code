@@ -1,14 +1,21 @@
 package com.phone.book.fragment.home
 
+import android.Manifest
 import android.content.*
+import android.content.pm.PackageManager
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.*
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.tabs.TabLayout
 import com.phone.book.R
 import com.phone.book.activity.MainActivity
 import com.phone.book.common.BaseFragment
+import com.phone.book.manager.PhoneInfoManager
 import kotlinx.android.synthetic.main.fragment_home.*
 
 
@@ -25,8 +32,11 @@ class HomeFragment : BaseFragment() {
     private var mSeekLogFragment: SeekLogFragment? = null
     private var mCurrentIndex = 0
 
+    private var handler: Handler = Handler(Looper.getMainLooper())
+
 
     companion object {
+        private val REQUES_READ_WRITE_CODE = 0x01
         private const val TAG = "HomeFragment"
 
         private const val KEY_CURRENT_SELECTED_POSITION = "key_current_selected_position"
@@ -75,6 +85,37 @@ class HomeFragment : BaseFragment() {
         mMainActivity?.hideAppbarToolbar()
 
 //        PhoneFileUtils.copyPrivateToDocuments(BaseApplication.context, "Myphone.txt", PhoneBookInfo("研发部","13111111").toString());
+        checkPermisson()
+    }
+
+    private fun checkPermisson() {
+        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
+                requireContext(), Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            this.requestPermissions(arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), REQUES_READ_WRITE_CODE)
+        } else {
+            PhoneInfoManager.instance.updatePhoneInfo()
+            handler.postDelayed(Runnable {
+                mDeptListFragment?.refreshInit()
+            }, 1500L)
+        }
+    }
+
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == REQUES_READ_WRITE_CODE) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                mMainActivity?.apply {
+                    PhoneInfoManager.instance.updatePhoneInfo()
+                    handler.postDelayed(Runnable {
+                        mDeptListFragment?.refreshInit()
+                    }, 1500L)
+                }
+            } else {
+                showMsgDialog("请打开APP的存储权限。", null, { dialog, _ -> dialog.dismiss() }, null)
+            }
+        }
 
     }
 
@@ -169,7 +210,7 @@ class HomeFragment : BaseFragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-
+        handler.removeCallbacksAndMessages(null)
     }
 
 }

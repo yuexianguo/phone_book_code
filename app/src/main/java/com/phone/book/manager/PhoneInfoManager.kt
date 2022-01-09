@@ -25,10 +25,22 @@ class PhoneInfoManager {
         PhoneFileUtils.initPublicFileToAppFile(context,File(context.filesDir, PhoneFileUtils.FILE_NAME).absolutePath)
         val configObj = FileSystem.readString(File(context.filesDir, PhoneFileUtils.FILE_NAME))
         if (configObj == null || configObj.isEmpty()) {
-            phoneInfo = PhoneBookInfo.createNewMesh()
+            phoneInfo = PhoneBookInfo.createNewInstance()
             phoneInfo.saveOrUpdate(context)
         } else {
             phoneInfo = Gson().fromJson(configObj, PhoneBookInfo::class.java)
+        }
+    }
+
+    fun updatePhoneInfo(){
+        PhoneFileUtils.initPublicFileToAppFile(context,File(context.filesDir, PhoneFileUtils.FILE_NAME).absolutePath)
+        val configObj = FileSystem.readString(File(context.filesDir, PhoneFileUtils.FILE_NAME))
+        if (configObj == null || configObj.isEmpty()) {
+            phoneInfo = PhoneBookInfo.createNewInstance()
+            phoneInfo.saveOrUpdate(context)
+        } else {
+            phoneInfo = Gson().fromJson(configObj, PhoneBookInfo::class.java)
+            phoneInfo.saveOrUpdate(context)
         }
     }
 

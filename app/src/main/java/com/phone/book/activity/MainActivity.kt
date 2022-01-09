@@ -1,8 +1,13 @@
 package com.phone.book.activity
 
+import android.Manifest
 import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.View
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.phone.book.R
 import com.phone.book.common.BaseActivity
@@ -23,7 +28,6 @@ class MainActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        PhoneInfoManager.instance.init(this)
         if (savedInstanceState == null) {
             startHomeFragment(false)
         }
@@ -33,6 +37,8 @@ class MainActivity : BaseActivity() {
         findViewById<View>(android.R.id.list)
         android.R.layout.simple_selectable_list_item
     }
+
+
 
     override fun onBackPressed() {
         val fragment = supportFragmentManager.findFragmentById(R.id.fl_main_container)
