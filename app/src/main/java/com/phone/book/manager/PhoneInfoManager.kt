@@ -26,7 +26,7 @@ class PhoneInfoManager {
         val configObj = FileSystem.readString(File(context.filesDir, PhoneFileUtils.FILE_NAME))
         if (configObj == null || configObj.isEmpty()) {
             phoneInfo = PhoneBookInfo.createNewInstance()
-            phoneInfo.saveOrUpdate(context)
+//            phoneInfo.saveOrUpdate(context)
         } else {
             phoneInfo = Gson().fromJson(configObj, PhoneBookInfo::class.java)
         }

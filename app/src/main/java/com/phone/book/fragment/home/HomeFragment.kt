@@ -98,7 +98,7 @@ class HomeFragment : BaseFragment() {
             PhoneInfoManager.instance.updatePhoneInfo()
             handler.postDelayed(Runnable {
                 mDeptListFragment?.refreshInit()
-            }, 1500L)
+            }, 1000L)
         }
     }
 
@@ -110,7 +110,7 @@ class HomeFragment : BaseFragment() {
                     PhoneInfoManager.instance.updatePhoneInfo()
                     handler.postDelayed(Runnable {
                         mDeptListFragment?.refreshInit()
-                    }, 1500L)
+                    }, 1000L)
                 }
             } else {
                 showMsgDialog("请打开APP的存储权限。", null, { dialog, _ -> dialog.dismiss() }, null)
