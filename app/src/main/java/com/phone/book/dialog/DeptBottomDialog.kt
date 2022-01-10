@@ -95,20 +95,10 @@ class DeptBottomDialog : BaseDialogFragment() {
                 phoneDepartItem?.also {
                     it.id?.apply {
                         showMsgDialog("你确定删除部门：${it.name}",null,{dialog,_->
-                            showLoading(null,null,false)
-
                             PhoneInfoManager.instance.phoneInfo.deleteDept(this)
                             PhoneInfoManager.instance.phoneInfo.saveOrUpdate(BaseApplication.context)
-
-                            Handler().postDelayed(Runnable {
-                                LocalBroadcastManager.getInstance(BaseApplication.context).sendBroadcast(Intent(PhoneIntents.ACTION_MODIFY_DEPT_SUCCESS))
-                                Handler().postDelayed({
-                                    LocalBroadcastManager.getInstance(BaseApplication.context).sendBroadcast(Intent(PhoneIntents.ACTION_MODIFY_CALL_CARD_SUCCESS))
-                                    dismissLoading()
-                                    dialog.dismiss()
-                                },1000L)
-                            },1000L)
-
+                            LocalBroadcastManager.getInstance(BaseApplication.context).sendBroadcast(Intent(PhoneIntents.ACTION_DELETE_DEPT_SUCCESS))
+                            dialog.dismiss()
                         },{dialog,_->dialog.dismiss()},true)
                     }
 

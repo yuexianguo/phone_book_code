@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.phone.book.PhoneIntents
+import com.phone.book.PhoneIntents.Companion.ACTION_DELETE_DEPT_SUCCESS
 import com.phone.book.R
 import com.phone.book.activity.EditInfoContainerActivity
 import com.phone.book.activity.MainActivity
@@ -57,6 +58,7 @@ class DeptListFragment : BaseFragment() {
 
     companion object {
         private const val REQUES_READ_WRITE_CODE = 0x01
+
         @JvmStatic
         fun newInstance() =
             DeptListFragment().apply {
@@ -93,6 +95,11 @@ class DeptListFragment : BaseFragment() {
                         }
 
                     }
+                    ACTION_DELETE_DEPT_SUCCESS -> {
+                        getContext()?.apply {
+                            updateAllPageData()
+                        }
+                    }
                     else -> {
                     }
                 }
@@ -106,6 +113,7 @@ class DeptListFragment : BaseFragment() {
             val intentFilter = IntentFilter()
             intentFilter.addAction(PhoneIntents.ACTION_MODIFY_DEPT_SUCCESS)
             intentFilter.addAction(PhoneIntents.ACTION_MODIFY_CALL_CARD_SUCCESS)
+            intentFilter.addAction(PhoneIntents.ACTION_DELETE_DEPT_SUCCESS)
             LocalBroadcastManager.getInstance(it).registerReceiver(mReceiver, intentFilter)
         }
     }
@@ -149,8 +157,33 @@ class DeptListFragment : BaseFragment() {
             }
         })
 
-        updateDeptListUI()
+        updateAllPageData()
 
+    }
+
+    fun updateAllPageData() {
+        context?.apply {
+            updateDeptListUI()
+            updatePhoneListUI()
+        }
+
+    }
+
+    private fun updatePhoneListUI() {
+        if (mTreeList.isNotEmpty()) {
+            val currentDept = mTreeList[0]
+            currentDept?.apply {
+                val filter = PhoneInfoManager.instance.phoneInfo.phoneList.filter { it -> it.department.id == this.id }
+                mDeptPhoneList.clear()
+                mDeptPhoneList.addAll(filter)
+                deptPhoneListAdapter?.setList(filter)
+                deptPhoneListAdapter?.notifyDataSetChanged()
+            }
+        } else {
+            mDeptPhoneList.clear()
+            deptPhoneListAdapter?.setList(mDeptPhoneList)
+            deptPhoneListAdapter?.notifyDataSetChanged()
+        }
     }
 
 
@@ -224,7 +257,9 @@ class DeptListFragment : BaseFragment() {
     private fun checkPermisson() {
         mMainActivity?.also {
             if (ContextCompat.checkSelfPermission(it, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
-                    it, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                    it, Manifest.permission.READ_EXTERNAL_STORAGE
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
                 ActivityCompat.requestPermissions(it, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE), REQUES_READ_WRITE_CODE);
             }
         }
@@ -290,6 +325,10 @@ class DeptListFragment : BaseFragment() {
                 adapterDept?.notifyDataSetChanged()
             }
 
+        } else {
+            mTreeList.clear()
+            adapterDept?.setNewList(mTreeList)
+            adapterDept?.notifyDataSetChanged()
         }
     }
 

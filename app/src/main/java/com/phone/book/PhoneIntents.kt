@@ -5,6 +5,8 @@ interface PhoneIntents {
         private const val packageName = "com.phone.book"
         const val ACTION_MODIFY_DEPT_SUCCESS = "$packageName.action.MODIFY_DEPT_SUCCESS"
         const val ACTION_MODIFY_CALL_CARD_SUCCESS = "$packageName.action.MODIFY_CALL_CARD_SUCCESS"
+        const val ACTION_DELETE_CALL_CARD_SUCCESS = "$packageName.action.DELETE_CALL_CARD_SUCCESS"
+        const val ACTION_DELETE_DEPT_SUCCESS = "$packageName.action.DELETE_DEPT_SUCCESS"
 
     }
 }
