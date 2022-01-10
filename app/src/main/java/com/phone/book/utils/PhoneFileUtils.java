@@ -27,6 +27,15 @@ public class PhoneFileUtils {
     public static void listAndDeleteFiles(Context context) {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             String queryPathKey = MediaStore.Files.FileColumns.RELATIVE_PATH;
+
+            //delete target file name file,but no need here
+/*            String selection = queryPathKey + "=? and " + MediaStore.Files.FileColumns.DISPLAY_NAME + "=?";
+            Cursor cursor = context.getContentResolver().query(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL),
+                    new String[]{MediaStore.Files.FileColumns._ID, queryPathKey, MediaStore.Files.FileColumns.DISPLAY_NAME},
+                    selection,
+                    new String[]{DIR_NAME, FILE_NAME},
+                    null); */
+
             String selection = queryPathKey + "=?";
             Cursor cursor = context.getContentResolver().query(MediaStore.Files.getContentUri(MediaStore.VOLUME_EXTERNAL),
                     new String[]{MediaStore.Files.FileColumns._ID, queryPathKey},
@@ -50,14 +59,13 @@ public class PhoneFileUtils {
                 }
 
             } catch (Exception e) {
-                //Log.i("copyPrivateToDownload--","fail: " + e.getCause());
+                e.printStackTrace();
             }
         }
 
     }
 
     public static void initPublicFileToAppFile(Context context, String targetPath) {
-//        String filePath = "Download/PhoneTest/";
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q) {
             String queryPathKey = null;
 
