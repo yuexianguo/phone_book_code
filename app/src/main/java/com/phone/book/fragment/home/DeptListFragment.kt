@@ -327,6 +327,7 @@ class DeptListFragment : BaseFragment() {
 
         } else {
             mTreeList.clear()
+            currentSelectDepartItem = null
             adapterDept?.setNewList(mTreeList)
             adapterDept?.notifyDataSetChanged()
         }
