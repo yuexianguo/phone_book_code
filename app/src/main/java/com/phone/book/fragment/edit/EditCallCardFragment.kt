@@ -86,6 +86,12 @@ class EditCallCardFragment : BaseFragment() {
             }
         })
 
+        edit_info_cancel.setOnClickListener(object : OnSingleClickListener() {
+            override fun onSingleClick(v: View) {
+                mActivity?.onBackPressed()
+            }
+        })
+
         ll_head_layout.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(v: View) {
                 var fragment = childFragmentManager.findFragmentByTag(TAG_HEAD_SELECT_DIALOG) as? HeadSelectDialog

@@ -128,7 +128,7 @@ public class PhoneFileUtils {
             }
         } else {
             //android 9以下
-            String stringResult = FileSystem.readString(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), FILE_NAME));
+            String stringResult = FileSystem.readString(new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS), FILE_NAME));
             if (!TextUtils.isEmpty(stringResult)) {
                 FileSystem.writeString(context.getFilesDir(), FILE_NAME, stringResult);
             }

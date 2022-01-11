@@ -56,6 +56,17 @@
             android:layout_marginEnd="@dimen/x200"
             android:layout_marginBottom="@dimen/x20"
             />
+
+        <Button
+            android:id="@+id/bt_delete_call_card"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/x60"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/bt_add_dept_cancel"
+            android:layout_marginRight="@dimen/x40"
+            android:text="删除名片"
+            android:background="@drawable/common_selector_btn_bg"
+            />
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView

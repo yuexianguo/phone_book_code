@@ -2,26 +2,19 @@ package com.phone.book.fragment.edit
 
 import android.app.Activity
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
-import android.os.Bundle
 import android.view.View
-import android.widget.CheckBox
-import android.widget.TextView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.phone.book.R
 import com.phone.book.activity.EditInfoContainerActivity
 import com.phone.book.adapter.DeptTreeAdapter
 import com.phone.book.bean.DeptTree
-import com.phone.book.bean.PhoneDepartItem
 import com.phone.book.common.BaseFragment
 import com.phone.book.common.listener.OnSingleClickListener
 import com.phone.book.common.utils.LogUtil
 import com.phone.book.manager.PhoneInfoManager
 import kotlinx.android.synthetic.main.fragment_select_dept.*
 import java.util.ArrayList
-import java.util.HashMap
 
 
 const val TAG_SELECT_DEPT_FRAGMENT = "SelectDeptFragment"
@@ -138,7 +131,7 @@ class SelectDeptFragment : BaseFragment() {
         }
         if (mTreeList.isEmpty()) {
             showMsgDialog("当前没部门可选，请新增部门。",null, { dialog, _ -> dialog.dismiss()
-                             EditInfoContainerActivity.startEditDeptFragment(requireContext(),null)
+                             EditInfoContainerActivity.startAddDeptFragment(requireContext(),null)
                                                  },null)
         }
     }

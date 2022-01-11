@@ -32,10 +32,10 @@ class EditInfoContainerActivity : BaseActivity() {
             }
         }
 
-        fun startEditDeptFragment(context: Context?, targetDept: PhoneDepartItem?) {
+        fun startAddDeptFragment(context: Context?, targetDept: PhoneDepartItem?) {
             if (context != null) {
                 val intent = Intent(context, EditInfoContainerActivity::class.java)
-                intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_EDIT_DEPT_FRAGMENT)
+                intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_ADD_DEPT_FRAGMENT)
                 intent.putExtra(TAG_TARGET_DEPART_ITEM, targetDept)
                 context.startActivity(intent)
             }
@@ -54,6 +54,15 @@ class EditInfoContainerActivity : BaseActivity() {
                 val intent = Intent(context, EditInfoContainerActivity::class.java)
                 intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_PHONE_INFO_FRAGMENT)
                 intent.putExtra(TAG_TARGET_PHONE_ITEM, phoneItem)
+                context.startActivity(intent)
+            }
+        }
+
+        fun startModifyDeptFragment(context: Context?, phoneDepartItem: PhoneDepartItem?) {
+            if (context != null) {
+                val intent = Intent(context, EditInfoContainerActivity::class.java)
+                intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_MODIFY_DEPT_FRAGMENT)
+                intent.putExtra(TAG_TARGET_MODIFY_DEPART_ITEM, phoneDepartItem)
                 context.startActivity(intent)
             }
         }
@@ -84,10 +93,10 @@ class EditInfoContainerActivity : BaseActivity() {
                     val targetDept = if (serializableExtra != null) serializableExtra as PhoneDepartItem else null
                     fragment = EditCallCardFragment.newInstance(targetDept)
                 }
-                TAG_EDIT_DEPT_FRAGMENT -> {
+                TAG_ADD_DEPT_FRAGMENT -> {
                     val serializableExtra = intent.getSerializableExtra(TAG_TARGET_DEPART_ITEM)
                     val targetDept = if (serializableExtra != null) serializableExtra as PhoneDepartItem else null
-                    fragment = EditDeptFragment.newInstance(targetDept)
+                    fragment = AddDeptFragment.newInstance(targetDept)
                 }
                 TAG_SELECT_DEPT_FRAGMENT -> {
                     fragment = SelectDeptFragment.newInstance()
@@ -96,6 +105,11 @@ class EditInfoContainerActivity : BaseActivity() {
                     val serializableExtra = intent.getSerializableExtra(TAG_TARGET_PHONE_ITEM)
                     val phoneItem = if (serializableExtra != null) serializableExtra as PhoneBookItem else null
                     fragment = PhoneInfoFragment.newInstance(phoneItem)
+                }
+                TAG_MODIFY_DEPT_FRAGMENT -> {
+                    val serializableExtra = intent.getSerializableExtra(TAG_TARGET_MODIFY_DEPART_ITEM)
+                    val targetDept = if (serializableExtra != null) serializableExtra as PhoneDepartItem else null
+                    fragment = ModifyDeptFragment.newInstance(targetDept)
                 }
                 else -> {
                 }

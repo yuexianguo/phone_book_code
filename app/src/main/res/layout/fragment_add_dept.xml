@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="@dimen/fragment_padding"
+    >
+
+    <LinearLayout
+        android:id="@+id/ll_add_dept_current"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/add_dept_text_current_dept"
+            style="@style/DeptItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="当前部门：" />
+
+        <TextView
+            android:id="@+id/add_dept_current_dept_value"
+            style="@style/DeptItem"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_add_dept_add"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:gravity="center_vertical"
+        android:layout_marginTop="@dimen/x40"
+        android:layout_below="@+id/ll_add_dept_current"
+        >
+
+        <TextView
+            android:id="@+id/add_dept_add_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            style="@style/DeptItem"
+            android:text="新增部门："
+            />
+
+        <EditText
+            android:id="@+id/add_dept_add_value"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x20"
+            android:layout_weight="1"
+            android:background="@drawable/edit_info_item_box_bg"
+            android:gravity="start|center_vertical"
+            android:inputType="text"
+            android:paddingStart="@dimen/x5"
+            style="@style/DeptItem" />
+
+
+    </LinearLayout>
+
+    <RadioGroup
+        android:id="@+id/rg_add_dept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ll_add_dept_add"
+        android:layout_marginTop="@dimen/x40"
+        android:orientation="horizontal"
+        >
+        <RadioButton
+            android:id="@+id/rb_add_dept_same_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:checked="true"
+            android:textColor="@android:color/black"
+            android:textSize="@dimen/x40"
+            android:text="同级部门"
+            />
+        <RadioButton
+            android:id="@+id/rb_add_dept_second_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5dp"
+            android:layout_weight="1"
+            android:textSize="@dimen/x40"
+            android:textColor="@android:color/black"
+            android:text="次级部门"
+            />
+
+    </RadioGroup>
+    <Button
+        android:id="@+id/bt_add_dept_save"
+        android:layout_width="@dimen/x120"
+        android:layout_height="@dimen/x60"
+        android:layout_alignParentBottom="true"
+        android:layout_toLeftOf="@+id/bt_add_dept_cancel"
+        android:layout_marginRight="@dimen/x40"
+        android:text="保存"
+        android:background="@drawable/common_selector_btn_bg"
+        />
+
+    <Button
+        android:id="@+id/bt_add_dept_cancel"
+        android:layout_width="@dimen/x120"
+        android:layout_height="@dimen/x60"
+        android:text="取消"
+        android:layout_marginRight="@dimen/x60"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:background="@drawable/common_selector_btn_bg"
+        />
+</RelativeLayout>

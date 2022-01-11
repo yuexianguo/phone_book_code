@@ -3,7 +3,6 @@ package com.phone.book.dialog
 import android.app.Dialog
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
@@ -66,6 +65,7 @@ class DeptBottomDialog : BaseDialogFragment() {
 
     private fun initView(alertDialog: AlertDialog) {
         val add_dept = alertDialog.findViewById<Button>(R.id.add_dept)
+        val modify_dept = alertDialog.findViewById<Button>(R.id.modify_dept)
         val add_call_card = alertDialog.findViewById<Button>(R.id.add_call_card)
         val dept_bottom_dialog_cancel = alertDialog.findViewById<Button>(R.id.dept_bottom_dialog_cancel)
         val dept_bottom_dialog_delete = alertDialog.findViewById<Button>(R.id.delete_dept)
@@ -73,7 +73,14 @@ class DeptBottomDialog : BaseDialogFragment() {
         add_dept?.setOnClickListener(object :OnSingleClickListener(){
             override fun onSingleClick(v: View) {
                 dismiss()
-                EditInfoContainerActivity.startEditDeptFragment(fragment.context,phoneDepartItem)
+                EditInfoContainerActivity.startAddDeptFragment(fragment.context,phoneDepartItem)
+            }
+        })
+
+        modify_dept?.setOnClickListener(object :OnSingleClickListener(){
+            override fun onSingleClick(v: View) {
+                dismiss()
+                EditInfoContainerActivity.startModifyDeptFragment(fragment.context,phoneDepartItem)
             }
         })
 

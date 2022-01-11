@@ -27,7 +27,7 @@ class PhoneBookInfo : Serializable {
         FileSystem.writeString(context.filesDir, FILE_NAME, Gson().toJson(this))
         if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.P) {
             //android 9 以下
-            val storagePublicDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS)
+            val storagePublicDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS)
             FileSystem.writeString(storagePublicDirectory, FILE_NAME, Gson().toJson(this))
         } else {
             PhoneFileUtils.copyPrivateToDocuments(context, File(context.filesDir, FILE_NAME).absolutePath)
