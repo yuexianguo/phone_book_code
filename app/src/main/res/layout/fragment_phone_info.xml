@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/fragment_padding"
@@ -8,6 +8,7 @@
     >
 
     <LinearLayout
+        android:id="@+id/ll_phone_info_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -57,21 +58,30 @@
             android:layout_marginBottom="@dimen/x20"
             />
 
-        <Button
-            android:id="@+id/bt_delete_call_card"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/x60"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@+id/bt_add_dept_cancel"
-            android:layout_marginRight="@dimen/x40"
-            android:text="删除名片"
-            android:background="@drawable/common_selector_btn_bg"
-            />
+
     </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/phone_info_recyclerView"
+        android:layout_below="@+id/ll_phone_info_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
 
-</LinearLayout>
+
+    <Button
+        android:id="@+id/bt_edit_input_tune"
+        android:layout_width="@dimen/x100"
+        android:layout_height="@dimen/x100"
+        android:layout_marginTop="@dimen/x20"
+        android:layout_marginRight="@dimen/x40"
+        android:layout_marginBottom="@dimen/x20"
+        android:background="@drawable/tune_circle_shape"
+        android:gravity="center"
+        android:text="+"
+        android:textSize="@dimen/x60"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        />
+</RelativeLayout>
