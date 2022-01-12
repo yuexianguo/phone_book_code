@@ -69,7 +69,7 @@
 
 
     <Button
-        android:id="@+id/bt_edit_input_tune"
+        android:id="@+id/bt_show_phone_info_bottom"
         android:layout_width="@dimen/x100"
         android:layout_height="@dimen/x100"
         android:layout_marginTop="@dimen/x20"

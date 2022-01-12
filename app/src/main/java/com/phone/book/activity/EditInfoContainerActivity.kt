@@ -23,10 +23,10 @@ class EditInfoContainerActivity : BaseActivity() {
         private const val TAG = "EditInfoActivity"
 
 
-        fun startEditCallCardFragment(context: Context?, targetDept: PhoneDepartItem?) {
+        fun startAddCallCardFragment(context: Context?, targetDept: PhoneDepartItem?) {
             if (context != null) {
                 val intent = Intent(context, EditInfoContainerActivity::class.java)
-                intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_EDIT_CALL_CARD_FRAGMENT)
+                intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_Add_CALL_CARD_FRAGMENT)
                 intent.putExtra(TAG_TARGET_DEPART_ITEM, targetDept)
                 context.startActivity(intent)
             }
@@ -67,6 +67,24 @@ class EditInfoContainerActivity : BaseActivity() {
             }
         }
 
+        fun startModifyCallCardFragment(context: Context?, phoneBookItem: PhoneBookItem) {
+            if (context != null) {
+                val intent = Intent(context, EditInfoContainerActivity::class.java)
+                intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_MODIFY_CALL_CARD_FRAGMENT)
+                intent.putExtra(TAG_TARGET_MODIFY_CALL_CARD_ITEM, phoneBookItem)
+                context.startActivity(intent)
+            }
+        }
+
+        fun startCopyCallCardFragment(context: Context?, phoneBookItem: PhoneBookItem) {
+            if (context != null) {
+                val intent = Intent(context, EditInfoContainerActivity::class.java)
+                intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_COPY_CALL_CARD_FRAGMENT)
+                intent.putExtra(TAG_TARGET_COPY_CALL_CARD_ITEM, phoneBookItem)
+                context.startActivity(intent)
+            }
+        }
+
     }
 
     override val layoutId: Int
@@ -88,10 +106,10 @@ class EditInfoContainerActivity : BaseActivity() {
         if (!TextUtils.isEmpty(target)) {
             var fragment: Fragment? = null
             when (target) {
-                TAG_EDIT_CALL_CARD_FRAGMENT -> {
+                TAG_Add_CALL_CARD_FRAGMENT -> {
                     val serializableExtra = intent.getSerializableExtra(TAG_TARGET_DEPART_ITEM)
                     val targetDept = if (serializableExtra != null) serializableExtra as PhoneDepartItem else null
-                    fragment = EditCallCardFragment.newInstance(targetDept)
+                    fragment = AddCallCardFragment.newInstance(targetDept)
                 }
                 TAG_ADD_DEPT_FRAGMENT -> {
                     val serializableExtra = intent.getSerializableExtra(TAG_TARGET_DEPART_ITEM)
@@ -110,6 +128,16 @@ class EditInfoContainerActivity : BaseActivity() {
                     val serializableExtra = intent.getSerializableExtra(TAG_TARGET_MODIFY_DEPART_ITEM)
                     val targetDept = if (serializableExtra != null) serializableExtra as PhoneDepartItem else null
                     fragment = ModifyDeptFragment.newInstance(targetDept)
+                }
+                TAG_MODIFY_CALL_CARD_FRAGMENT -> {
+                    val serializableExtra = intent.getSerializableExtra(TAG_TARGET_MODIFY_CALL_CARD_ITEM)
+                    val targetPhone = if (serializableExtra != null) serializableExtra as PhoneBookItem else null
+                    fragment = ModifyCallCardFragment.newInstance(targetPhone)
+                }
+                TAG_COPY_CALL_CARD_FRAGMENT -> {
+                    val serializableExtra = intent.getSerializableExtra(TAG_TARGET_COPY_CALL_CARD_ITEM)
+                    val targetPhone = if (serializableExtra != null) serializableExtra as PhoneBookItem else null
+                    fragment = CopyCallCardFragment.newInstance(targetPhone)
                 }
                 else -> {
                 }

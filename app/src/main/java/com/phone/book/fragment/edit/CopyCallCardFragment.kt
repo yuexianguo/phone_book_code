@@ -24,29 +24,31 @@ import com.phone.book.dialog.HeadSelectDialog
 import com.phone.book.dialog.TAG_HEAD_SELECT_DIALOG
 import com.phone.book.manager.PhoneInfoManager
 import com.phone.book.utils.InputFilterMinMax
-import kotlinx.android.synthetic.main.fragment_edit_call_card.*
+import kotlinx.android.synthetic.main.fragment_add_call_card.*
 
 
-const val TAG_EDIT_CALL_CARD_FRAGMENT = "EditCallCardFragment"
+const val TAG_COPY_CALL_CARD_FRAGMENT = "CopyCallCardFragment"
+const val TAG_TARGET_COPY_CALL_CARD_ITEM = "tag_target_copy_call_card_item"
 
-class EditCallCardFragment : BaseFragment() {
+class CopyCallCardFragment : BaseFragment() {
 
 
     private var mActivity: EditInfoContainerActivity? = null
+    private var currentPhone: PhoneBookItem? = null
     private var currentDept: PhoneDepartItem? = null
     private var isHeadMan = true
     override val layoutId: Int
-        get() = R.layout.fragment_edit_call_card
+        get() = R.layout.fragment_add_call_card
 
     companion object {
-        private const val TAG_TARGET_DEPART_BEAN = "tag_target_depart_bean"
+        private const val TAG_TARGET_PHONE_BEAN = "tag_target_depart_bean"
         private const val REQUEST_CODE_SELECT_DEPT = 0x01
 
         @JvmStatic
-        fun newInstance(targetDept: PhoneDepartItem?) =
-            EditCallCardFragment().apply {
+        fun newInstance(phoneBookItem: PhoneBookItem?) =
+            CopyCallCardFragment().apply {
                 arguments = Bundle().apply {
-                    putSerializable(TAG_TARGET_DEPART_BEAN, targetDept)
+                    putSerializable(TAG_TARGET_PHONE_BEAN, phoneBookItem)
                 }
             }
     }
@@ -54,17 +56,16 @@ class EditCallCardFragment : BaseFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.also {
-            val serializableExtra = it.getSerializable(TAG_TARGET_DEPART_BEAN)
-            currentDept = if (serializableExtra != null) serializableExtra as PhoneDepartItem else null
+            val serializableExtra = it.getSerializable(TAG_TARGET_PHONE_BEAN)
+            currentPhone = if (serializableExtra != null) serializableExtra as PhoneBookItem else null
+            currentDept = currentPhone?.department
         }
     }
 
 
     override fun initViews() {
         initToolbar()
-        currentDept?.apply {
-            edit_info_dept.desc = name
-        }
+
         edit_info_extension1.edit_info_box_value?.inputType = InputType.TYPE_CLASS_NUMBER
         edit_info_extension1.edit_info_box_value?.maxEms = 4
         edit_info_extension1.edit_info_box_value?.filters = arrayOf<InputFilter>(InputFilterMinMax("0", "9999"))
@@ -72,7 +73,7 @@ class EditCallCardFragment : BaseFragment() {
         edit_info_extension2.edit_info_box_value?.maxEms = 4
         edit_info_extension2.edit_info_box_value?.filters = arrayOf<InputFilter>(InputFilterMinMax("0", "9999"))
         disAbleDeptEdit(edit_info_dept.edit_info_box_value)
-
+        initViewUI()
         var fragment = this
         edit_info_dept.edit_info_box_value?.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(v: View) {
@@ -107,6 +108,32 @@ class EditCallCardFragment : BaseFragment() {
         })
     }
 
+    private fun initViewUI() {
+        currentPhone?.apply {
+            edit_info_name.desc = name
+            edit_info_work.desc = work
+            edit_info_dept.desc = department.name
+            edit_info_extension1.desc = extension1
+            edit_info_phone1.desc = phone1
+            edit_info_call1.desc = call1
+            edit_info_extension2.desc = extension2
+            edit_info_phone2.desc = phone2
+            edit_info_call2.desc = call2
+            edit_info_home_phone.desc = home_phone
+            edit_info_fax.desc = fax
+            edit_info_area_code.desc = area_code
+            edit_info_email.desc = email
+            edit_info_remarks.desc = remarks
+            if (sex.equals(TYPE_MAN)){
+                iv_head_icon.setImageDrawable(resources.getDrawable(R.mipmap.icon_man))
+                edit_info_head_text.text = TYPE_MAN
+            } else {
+                iv_head_icon.setImageDrawable(resources.getDrawable(R.mipmap.icon_woman))
+                edit_info_head_text.text = TYPE_WOMAN
+            }
+        }
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         if (resultCode == Activity.RESULT_OK) {
@@ -115,7 +142,7 @@ class EditCallCardFragment : BaseFragment() {
                     val serializableExtra = getSerializableExtra(EXTRA_SELECT_DEPT)
                     val targetDept = if (serializableExtra != null) serializableExtra as PhoneDepartItem else null
                     currentDept = targetDept
-                    edit_info_dept?.desc = currentDept?.name?:""
+                    edit_info_dept?.desc = currentDept?.name ?: ""
                 }
             }
         }

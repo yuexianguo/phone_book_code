@@ -11,6 +11,9 @@ import com.phone.book.bean.PhoneBookItem
 import com.phone.book.bean.TYPE_MAN
 import com.phone.book.common.BaseFragment
 import com.phone.book.common.adapter.CustomBaseAdapter
+import com.phone.book.common.listener.OnSingleClickListener
+import com.phone.book.dialog.DeptBottomDialog
+import com.phone.book.dialog.PhoneInfoBottomDialog
 import com.phone.book.manager.PhoneInfoManager
 import kotlinx.android.synthetic.main.fragment_phone_info.*
 
@@ -20,7 +23,7 @@ const val TAG_PHONE_INFO_FRAGMENT = "PhoneInfoFragment"
 const val TAG_TARGET_PHONE_ITEM = "TAG_TARGET_PHONE_ITEM"
 
 class PhoneInfoFragment : BaseFragment() {
-
+    private val TAG_PHONE_INFO_BOTTOM = "tag_phone_info_bottom"
     private var mEditInfoContainerActivity: EditInfoContainerActivity? = null
     private var phoneItem: PhoneBookItem? = null
     private var phoneInfoAdapter: PhoneInfoAdapter? = null
@@ -92,9 +95,26 @@ class PhoneInfoFragment : BaseFragment() {
             phone_info_work.text = it.work
         }
 
+        bt_show_phone_info_bottom.setOnClickListener(object :OnSingleClickListener(){
+            override fun onSingleClick(v: View) {
+                openBottomDialog()
+            }
+        })
+
         phoneInfoAdapter?.notifyDataSetChanged()
 
     }
+
+    private fun openBottomDialog(){
+        phoneItem?.apply {
+            val findFragmentByTag = childFragmentManager.findFragmentByTag(TAG_PHONE_INFO_BOTTOM) as PhoneInfoBottomDialog?
+            findFragmentByTag?.dismiss()
+            val beginTransaction = childFragmentManager.beginTransaction()
+            beginTransaction.add(PhoneInfoBottomDialog.newInstance(this), TAG_PHONE_INFO_BOTTOM)
+            beginTransaction.commitAllowingStateLoss()
+        }
+    }
+
     private fun initToolbar() {
         mEditInfoContainerActivity?.hideLogo()
         setToolbarTitle("名片信息", true)
