@@ -44,15 +44,6 @@
         />
 
     <Button
-        android:id="@+id/delete_call_card"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:text="删除名片"
-        android:layout_height="wrap_content"
-        style="@style/ItemTitle"
-        />
-
-    <Button
         android:id="@+id/dept_bottom_dialog_cancel"
         android:layout_width="0dp"
         android:layout_weight="1"

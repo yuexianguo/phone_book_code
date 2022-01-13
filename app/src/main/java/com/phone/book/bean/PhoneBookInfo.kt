@@ -160,6 +160,20 @@ class PhoneBookInfo : Serializable {
 
         }
     }
+
+    fun deletePhoneItem(id: Long):Boolean {
+        val iterator = phoneList.iterator()
+        while (iterator.hasNext()) {
+            val next = iterator.next()
+            next.apply {
+                if (id == this.id) {
+                    iterator.remove()
+                    return true
+                }
+            }
+        }
+        return false
+    }
 }
 
 class PhoneBookItem : Serializable {
