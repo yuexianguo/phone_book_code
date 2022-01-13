@@ -53,27 +53,6 @@ dependencies {
     api "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     api "androidx.core:core-ktx:$x_core_ktx"
 
-    //amplify start
-//    api "com.amazonaws:aws-android-sdk-lambda:$aws_version"
-//    api "com.amplifyframework:aws-auth-cognito:1.4.2"
-//    api "com.amplifyframework:aws-storage-s3:1.4.2"
-    //amplify end
-
-//    api 'com.amazonaws:aws-android-sdk-s3:2.19.1'
-
-    //mobile client start
-    api "com.amazonaws:aws-android-sdk-lambda:$aws_version"
-    //For AWSMobileClient only:
-    api "com.amazonaws:aws-android-sdk-mobile-client:$aws_version"
-    //For the drop-in UI also:
-    api "com.amazonaws:aws-android-sdk-auth-userpools:$aws_version"
-    api "com.amazonaws:aws-android-sdk-auth-ui:$aws_version"
-    //For hosted UI also:
-    api "com.amazonaws:aws-android-sdk-cognitoauth:$aws_version"
-    //for upload file to aws
-    api "com.amazonaws:aws-android-sdk-s3:$aws_version"
-
-    //mobile client end
     //mqtt sdk
     api "com.amazonaws:aws-android-sdk-iot:$aws_version"
     //network
@@ -88,14 +67,6 @@ dependencies {
     api "com.squareup.retrofit2:converter-gson:$retrofit_gson_version"
     //rxbinding
     api "com.jakewharton.rxbinding2:rxbinding:$rxbinding_version"
-
-    //facebook
-//    api 'com.facebook.android:facebook-android-sdk:latest.release'
-
-//    api "com.facebook.android:facebook-login:latest.release"
-//    api "com.facebook.android:facebook-login:$facebook_login_version"
-    //google sign in
-//    api "com.google.android.gms:play-services-auth:$play_services_auth_version"
 
     //loading
     implementation "com.kaopiz:kprogresshud:$kprogresshud_version"
