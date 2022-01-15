@@ -10,7 +10,7 @@ import com.phone.book.common.BaseFragment
 
 const val TAG_SEEK_CALL_FRAGMENT = "SeekLogFragment"
 
-class SeekLogFragment : BaseFragment() {
+class SeekCallFragment : BaseFragment() {
 
     private var mMainActivity: MainActivity? = null
 
@@ -20,7 +20,7 @@ class SeekLogFragment : BaseFragment() {
     companion object {
         @JvmStatic
         fun newInstance() =
-            SeekLogFragment().apply {
+            SeekCallFragment().apply {
                 arguments = Bundle().apply {
                 }
             }

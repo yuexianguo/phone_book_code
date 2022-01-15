@@ -6,11 +6,8 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import android.view.*
-import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentTransaction
-import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import com.google.android.material.tabs.TabLayout
 import com.phone.book.R
 import com.phone.book.activity.MainActivity
@@ -29,7 +26,7 @@ class HomeFragment : BaseFragment() {
     private var mDeptListFragment: DeptListFragment? = null
     private var mRecentContactsFragment: RecentContactsFragment? = null
     private var mHunFamilyFragment: HunFamilyFragment? = null
-    private var mSeekLogFragment: SeekLogFragment? = null
+    private var mSeekCallFragment: SeekCallFragment? = null
     private var mCurrentIndex = 0
 
     private var handler: Handler = Handler(Looper.getMainLooper())
@@ -57,7 +54,7 @@ class HomeFragment : BaseFragment() {
             mDeptListFragment = childFragmentManager.findFragmentByTag(TAG_DEPT_LIST_FRAGMENT) as DeptListFragment?
             mRecentContactsFragment = childFragmentManager.findFragmentByTag(TAG_RECENT_CONTACTS_FRAGMENT) as RecentContactsFragment?
             mHunFamilyFragment = childFragmentManager.findFragmentByTag(TAG_HUN_FAMILY_FRAGMENT) as HunFamilyFragment?
-            mSeekLogFragment = childFragmentManager.findFragmentByTag(TAG_SEEK_CALL_FRAGMENT) as SeekLogFragment?
+            mSeekCallFragment = childFragmentManager.findFragmentByTag(TAG_SEEK_CALL_FRAGMENT) as SeekCallFragment?
         }
 
         mTabTitles = arrayOf("部门列表", "最近联系人", "百家姓", "查找")
@@ -141,7 +138,7 @@ class HomeFragment : BaseFragment() {
                 transaction.show(mDeptListFragment!!)
                 mRecentContactsFragment?.also { transaction.hide(it) }
                 mHunFamilyFragment?.also { transaction.hide(it) }
-                mSeekLogFragment?.also { transaction.hide(it) }
+                mSeekCallFragment?.also { transaction.hide(it) }
             }
             1 -> {
                 if (mRecentContactsFragment == null) {
@@ -151,7 +148,7 @@ class HomeFragment : BaseFragment() {
                 transaction.show(mRecentContactsFragment!!)
                 mDeptListFragment?.also { transaction.hide(it) }
                 mHunFamilyFragment?.also { transaction.hide(it) }
-                mSeekLogFragment?.also { transaction.hide(it) }
+                mSeekCallFragment?.also { transaction.hide(it) }
             }
             2 -> {
                 if (mHunFamilyFragment == null) {
@@ -161,14 +158,14 @@ class HomeFragment : BaseFragment() {
                 transaction.show(mHunFamilyFragment!!)
                 mDeptListFragment?.also { transaction.hide(it) }
                 mRecentContactsFragment?.also { transaction.hide(it) }
-                mSeekLogFragment?.also { transaction.hide(it) }
+                mSeekCallFragment?.also { transaction.hide(it) }
             }
             3 -> {
-                if (mSeekLogFragment == null) {
-                    mSeekLogFragment = SeekLogFragment.newInstance()
-                    transaction.add(R.id.fl_home_container, mSeekLogFragment!!, TAG_SEEK_CALL_FRAGMENT)
+                if (mSeekCallFragment == null) {
+                    mSeekCallFragment = SeekCallFragment.newInstance()
+                    transaction.add(R.id.fl_home_container, mSeekCallFragment!!, TAG_SEEK_CALL_FRAGMENT)
                 }
-                transaction.show(mSeekLogFragment!!)
+                transaction.show(mSeekCallFragment!!)
                 mDeptListFragment?.also { transaction.hide(it) }
                 mRecentContactsFragment?.also { transaction.hide(it) }
                 mHunFamilyFragment?.also { transaction.hide(it) }

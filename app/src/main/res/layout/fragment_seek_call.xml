@@ -2,7 +2,105 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="horizontal"
+    android:background="@color/white">
+
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_marginRight="2dp"
+        android:layout_height="match_parent"
+        app:layout_constraintEnd_toStartOf="@+id/seek_call_center_view"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:orientation="vertical"
+        android:padding="@dimen/x20"
+        >
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/seek_call_item_bg"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="2">
+            <com.phone.book.view.EditInfoView
+                android:id="@+id/eif_seek_call_simple_find"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:editInfoHint="请输入查找内容"
+                app:editInfoName="简拼查找" />
+
+            <Button
+                android:id="@+id/bt_seek_call_find1"
+                android:layout_width="@dimen/x180"
+                android:layout_height="@dimen/x60"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/x20"
+                android:text="开始查找"
+                android:layout_marginRight="@dimen/x60"
+                android:background="@drawable/common_selector_btn_bg"
+                />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/x20"
+            android:background="@drawable/seek_call_item_bg"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_weight="3">
+            <com.phone.book.view.EditInfoView
+                android:id="@+id/eif_seek_call_key1_find"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                app:editInfoHint="请输入查找内容"
+                app:editInfoName="关键字1" />
+
+            <com.phone.book.view.EditInfoView
+                android:id="@+id/eif_seek_call_key2_find"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/x20"
+                app:editInfoHint="请输入查找内容"
+                app:editInfoName="关键字2" />
+
+            <Button
+                android:id="@+id/bt_seek_call_find2"
+                android:layout_width="@dimen/x180"
+                android:layout_height="@dimen/x60"
+                android:text="开始查找"
+                android:layout_marginTop="@dimen/x20"
+                android:layout_gravity="center"
+                android:layout_marginRight="@dimen/x60"
+                android:background="@drawable/common_selector_btn_bg"
+                />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/seek_call_center_view"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/dash_line"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_dept_list_detail"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="2dp"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toEndOf="@+id/seek_call_center_view"
+        android:layout_height="match_parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
