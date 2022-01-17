@@ -7,6 +7,7 @@ import com.google.gson.Gson
 import com.phone.book.utils.FileSystem
 import com.phone.book.utils.PhoneFileUtils
 import com.phone.book.utils.PhoneFileUtils.FILE_NAME
+import com.phone.book.utils.PinyinUtils
 import java.io.File
 import java.io.Serializable
 
@@ -40,6 +41,21 @@ class PhoneBookInfo : Serializable {
 
     fun insertDeptItem(phoneDepartItem: PhoneDepartItem) {
         phoneDepartItemList.add(phoneDepartItem)
+    }
+
+    fun foundBySimpleName(seekSimpleName: String):ArrayList<PhoneBookItem>{
+        var targetList:ArrayList<PhoneBookItem> = arrayListOf()
+        if (phoneList.isNotEmpty()) {
+            for (phoneBookItem in phoneList) {
+                if (phoneBookItem.name.isNotEmpty()){
+                    val pingYin = PinyinUtils.getPingYin(phoneBookItem.name)
+                    if (pingYin.contains(seekSimpleName, ignoreCase = true)){
+                        targetList.add(phoneBookItem)
+                    }
+                }
+            }
+        }
+        return targetList
     }
 
     //for create PhoneBookItem only

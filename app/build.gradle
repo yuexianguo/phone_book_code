@@ -76,4 +76,6 @@ dependencies {
 
     //for the StringUtils
     implementation "org.apache.commons:commons-lang3:$commons_lang_version"
+
+    implementation "com.belerweb:pinyin4j:2.5.0"
 }
