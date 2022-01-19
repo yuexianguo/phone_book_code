@@ -16,7 +16,6 @@ import com.phone.book.bean.PhoneBookItem
 import com.phone.book.common.BaseFragment
 import com.phone.book.common.listener.OnSingleClickListener
 import com.phone.book.manager.PhoneInfoManager
-import kotlinx.android.synthetic.main.fragment_dept_list.*
 import kotlinx.android.synthetic.main.fragment_seek_call.*
 
 
@@ -46,15 +45,50 @@ class SeekCallFragment : BaseFragment() {
         deptPhoneListAdapter = DeptPhoneListAdapter(mPhoneList)
         recyclerview_seek_call_list.adapter = deptPhoneListAdapter
 
-        bt_seek_call_find1.setOnClickListener(object :OnSingleClickListener(){
+        bt_seek_call_find1.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(v: View) {
-                val foundBySimpleNameList = PhoneInfoManager.instance.phoneInfo.foundBySimpleName(eif_seek_call_simple_find.desc)
+                if (eif_seek_call_simple_find.desc.isEmpty()) {
+                    toastMsg("请输入查找内容")
+                    return
+                }
+                val foundBySimpleNameList = PhoneInfoManager.instance.phoneInfo.foundPhoneBySimpleNameOrNum(eif_seek_call_simple_find.desc)
                 mPhoneList.clear()
                 mPhoneList.addAll(foundBySimpleNameList)
                 deptPhoneListAdapter?.setList(foundBySimpleNameList)
                 deptPhoneListAdapter?.notifyDataSetChanged()
             }
         })
+
+        bt_seek_call_find2.setOnClickListener(object : OnSingleClickListener() {
+            override fun onSingleClick(v: View) {
+                startBt2Find()
+            }
+        })
+    }
+
+    private fun startBt2Find(){
+        if (eif_seek_call_key1_find.desc.isEmpty() && eif_seek_call_key2_find.desc.isEmpty()) {
+            toastMsg("请至少输入一项查找内容")
+            return
+        }
+        if (eif_seek_call_key1_find.desc.isNotEmpty() && eif_seek_call_key2_find.desc.isNotEmpty()) {
+            //desc1 和 desc2同时满足
+            val foundPhoneByTwoString = PhoneInfoManager.instance.phoneInfo.foundPhoneByTwoString(eif_seek_call_key1_find.desc, eif_seek_call_key2_find.desc)
+            mPhoneList.clear()
+            mPhoneList.addAll(foundPhoneByTwoString)
+            deptPhoneListAdapter?.setList(foundPhoneByTwoString)
+        } else if (eif_seek_call_key1_find.desc.isEmpty() && eif_seek_call_key2_find.desc.isNotEmpty()) {
+            val foundPhoneBySimpleNameOrNum = PhoneInfoManager.instance.phoneInfo.foundPhoneBySimpleNameOrNum(eif_seek_call_key2_find.desc)
+            mPhoneList.clear()
+            mPhoneList.addAll(foundPhoneBySimpleNameOrNum)
+            deptPhoneListAdapter?.setList(foundPhoneBySimpleNameOrNum)
+        } else if (eif_seek_call_key1_find.desc.isNotEmpty() && eif_seek_call_key2_find.desc.isEmpty()) {
+            val foundPhoneBySimpleNameOrNum = PhoneInfoManager.instance.phoneInfo.foundPhoneBySimpleNameOrNum(eif_seek_call_key1_find.desc)
+            mPhoneList.clear()
+            mPhoneList.addAll(foundPhoneBySimpleNameOrNum)
+            deptPhoneListAdapter?.setList(foundPhoneBySimpleNameOrNum)
+        }
+        deptPhoneListAdapter?.notifyDataSetChanged()
     }
 
     class DeptPhoneListAdapter : RecyclerView.Adapter<DeptPhoneListAdapter.ViewHolder> {
@@ -116,7 +150,7 @@ class SeekCallFragment : BaseFragment() {
 
     override fun lazyFetchData() {
     }
-    
+
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

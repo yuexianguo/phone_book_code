@@ -43,20 +43,6 @@ class PhoneBookInfo : Serializable {
         phoneDepartItemList.add(phoneDepartItem)
     }
 
-    fun foundBySimpleName(seekSimpleName: String):ArrayList<PhoneBookItem>{
-        var targetList:ArrayList<PhoneBookItem> = arrayListOf()
-        if (phoneList.isNotEmpty()) {
-            for (phoneBookItem in phoneList) {
-                if (phoneBookItem.name.isNotEmpty()){
-                    val pingYin = PinyinUtils.getPingYin(phoneBookItem.name)
-                    if (pingYin.contains(seekSimpleName, ignoreCase = true)){
-                        targetList.add(phoneBookItem)
-                    }
-                }
-            }
-        }
-        return targetList
-    }
 
     //for create PhoneBookItem only
     fun generatePhoneId(): Long {
@@ -177,7 +163,7 @@ class PhoneBookInfo : Serializable {
         }
     }
 
-    fun deletePhoneItem(id: Long):Boolean {
+    fun deletePhoneItem(id: Long): Boolean {
         val iterator = phoneList.iterator()
         while (iterator.hasNext()) {
             val next = iterator.next()
@@ -189,6 +175,101 @@ class PhoneBookInfo : Serializable {
             }
         }
         return false
+    }
+
+    //found
+    fun foundPhoneBySimpleName(seekSimpleName: String): ArrayList<PhoneBookItem> {
+        var targetList: ArrayList<PhoneBookItem> = arrayListOf()
+        if (phoneList.isNotEmpty()) {
+            for (phoneBookItem in phoneList) {
+                if (phoneBookItem.name.isNotEmpty()) {
+                    val pingYin = PinyinUtils.getPingYin(phoneBookItem.name)
+                    if (pingYin.contains(seekSimpleName, ignoreCase = true)) {
+                        targetList.add(phoneBookItem)
+                    }
+                }
+            }
+        }
+        return targetList
+    }
+
+    fun foundPhoneByNumber(number: String): ArrayList<PhoneBookItem> {
+        var targetList: ArrayList<PhoneBookItem> = arrayListOf()
+        if (phoneList.isNotEmpty()) {
+            for (phoneBookItem in phoneList) {
+                if (phoneBookItem.extension1.isNotEmpty()) {
+                    if (phoneBookItem.extension1.contains(number)) {
+                        targetList.add(phoneBookItem)
+                    }
+                } else if (phoneBookItem.extension2.isNotEmpty()) {
+                    if (phoneBookItem.extension2.contains(number)) {
+                        targetList.add(phoneBookItem)
+                    }
+                }
+            }
+        }
+        return targetList
+    }
+
+    fun foundPhoneBySimpleNameOrNum(foundString: String): ArrayList<PhoneBookItem> {
+        var targetList: ArrayList<PhoneBookItem> = arrayListOf()
+        if (phoneList.isNotEmpty()) {
+            for (phoneBookItem in phoneList) {
+                if (phoneBookItem.extension1.isNotEmpty()) {
+                    if (phoneBookItem.extension1.contains(foundString)) {
+                        targetList.add(phoneBookItem)
+                        continue
+                    }
+                } else if (phoneBookItem.extension2.isNotEmpty()) {
+                    if (phoneBookItem.extension2.contains(foundString)) {
+                        targetList.add(phoneBookItem)
+                        continue
+                    }
+                }
+                if (phoneBookItem.name.isNotEmpty()) {
+                    val pingYin = PinyinUtils.getPingYin(phoneBookItem.name)
+                    val pingYinFound = PinyinUtils.getPingYin(foundString)
+                    if (pingYin.contains(pingYinFound, ignoreCase = true)) {
+                        targetList.add(phoneBookItem)
+                    }
+                }
+            }
+        }
+        return targetList
+    }
+
+    fun foundPhoneByTwoString(desc1: String, desc2: String): ArrayList<PhoneBookItem> {
+        //desc1 和 desc2同时满足
+        var targetList: ArrayList<PhoneBookItem> = arrayListOf()
+        val foundDesc1List = foundPhoneBySimpleNameOrNum(desc1)
+        if (foundDesc1List.isEmpty()) {
+            val foundDesc2List = foundPhoneBySimpleNameOrNum(desc2)
+            targetList.clear()
+            targetList.addAll(foundDesc2List)
+        } else {
+            for (phoneBookItem in foundDesc1List) {
+                if (phoneBookItem.extension1.isNotEmpty()) {
+                    if (phoneBookItem.extension1.contains(desc2)) {
+                        targetList.add(phoneBookItem)
+                        continue
+                    }
+                } else if (phoneBookItem.extension2.isNotEmpty()) {
+                    if (phoneBookItem.extension2.contains(desc2)) {
+                        targetList.add(phoneBookItem)
+                        continue
+                    }
+                }
+                if (phoneBookItem.name.isNotEmpty()) {
+                    val pingYin = PinyinUtils.getPingYin(phoneBookItem.name)
+                    val pingYinFound = PinyinUtils.getPingYin(desc2)
+                    if (pingYin.contains(pingYinFound, ignoreCase = true)) {
+                        targetList.add(phoneBookItem)
+                    }
+                }
+            }
+        }
+        return targetList
+
     }
 }
 
