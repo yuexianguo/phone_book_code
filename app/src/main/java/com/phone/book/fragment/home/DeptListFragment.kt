@@ -229,9 +229,7 @@ class DeptListFragment : BaseFragment() {
             init {
                 tvName = itemView.findViewById(R.id.adapter_dept_phone_item_name)
                 tvNumber = itemView.findViewById(R.id.adapter_dept_phone_item_number)
-
             }
-
         }
 
         interface OnItemClickListener {

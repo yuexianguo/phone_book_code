@@ -3,7 +3,6 @@ package com.phone.book.common.utils
 import android.content.Context
 import android.content.SharedPreferences
 import com.phone.book.common.BaseApplication.Companion.context
-import com.phone.book.common.manager.BrainManager
 
 object PrefUtils {
     // The name of sp, strut_config

@@ -129,12 +129,9 @@ class PhoneBookInfo : Serializable {
                                         }
                                     }
                                 }
-
                             }
                         }
-
                     }
-
                 }
             }
 
@@ -149,8 +146,6 @@ class PhoneBookInfo : Serializable {
                         }
                     }
                 }
-
-
             }
 
             val iterator = phoneDepartItemList.iterator()
@@ -162,10 +157,7 @@ class PhoneBookInfo : Serializable {
                         iterator.remove()
                     }
                 }
-
             }
-
-
         }
     }
 
@@ -275,7 +267,24 @@ class PhoneBookInfo : Serializable {
             }
         }
         return targetList
+    }
 
+    fun getAllLetterNameList():ArrayList<LetterNameBean>{
+        var targetLetterNameList:ArrayList<LetterNameBean> = arrayListOf()
+        for (letter in letterArray) {
+            if (phoneList.isNotEmpty()) {
+                for (phoneBookItem in phoneList) {
+                    val pingYin = PinyinUtils.getPingYin(phoneBookItem.name)
+                    if (pingYin.isNotEmpty()) {
+                        if (pingYin.substring(0,1).equals(letter,ignoreCase = true)) {
+                            targetLetterNameList.add(LetterNameBean(letter,phoneBookItem.name.substring(0,1)))
+                            break
+                        }
+                    }
+                }
+            }
+        }
+        return targetLetterNameList
     }
 }
 

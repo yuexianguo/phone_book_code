@@ -13,8 +13,6 @@ import androidx.appcompat.app.ActionBar
 import androidx.fragment.app.Fragment
 import com.phone.book.common.dialog.EditNameDialogFragment
 import com.phone.book.common.dialog.MsgDialogFragment
-import com.phone.book.common.manager.BrainManager
-import com.phone.book.common.utils.AllFwOTAUtils
 import com.phone.book.common.utils.LogUtil
 
 private const val TAG = "BaseFragment"
@@ -215,18 +213,18 @@ abstract class BaseFragment : Fragment(), BaseView {
     }
 
     protected fun <T> listChunked(list: List<T>): List<List<T>> {
-        if (BrainManager.localControl) {
-            if (BrainManager.deviceObject == null) {
-                return list.chunked(READ_NUM_LOCAL)
-            }
-            BrainManager.deviceObject?.also {
-                if (AllFwOTAUtils.isNeedReadMax(it.iotmVer)) {
-                    return list.chunked(READ_NUM_CLOUD)
-                } else {
-                    return list.chunked(READ_NUM_LOCAL)
-                }
-            }
-        }
+//        if (BrainManager.localControl) {
+//            if (BrainManager.deviceObject == null) {
+//                return list.chunked(READ_NUM_LOCAL)
+//            }
+//            BrainManager.deviceObject?.also {
+//                if (AllFwOTAUtils.isNeedReadMax(it.iotmVer)) {
+//                    return list.chunked(READ_NUM_CLOUD)
+//                } else {
+//                    return list.chunked(READ_NUM_LOCAL)
+//                }
+//            }
+//        }
         return list.chunked(READ_NUM_CLOUD)
     }
 }
