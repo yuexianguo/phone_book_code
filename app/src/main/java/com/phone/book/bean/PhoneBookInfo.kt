@@ -17,6 +17,12 @@ const val TYPE_WOMAN = "女士"
 class PhoneBookInfo : Serializable {
     var phoneList: ArrayList<PhoneBookItem> = arrayListOf()
     var phoneDepartItemList: ArrayList<PhoneDepartItem> = arrayListOf()
+    var letterArray = arrayOf(
+        "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
+        "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
+        "Y", "Z"
+    )
+
 
     companion object {
         fun createNewInstance(): PhoneBookInfo {

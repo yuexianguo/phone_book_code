@@ -2,7 +2,34 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:padding="@dimen/x20"
+    android:orientation="horizontal"
+    android:background="@color/white">
+    <androidx.recyclerview.widget.RecyclerView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/recyclerview_letter_hun_family_list"
+        android:layout_width="0dp"
+        app:layout_constraintEnd_toStartOf="@+id/hun_family_list_center_view"
+        android:layout_marginRight="2dp"
+        android:layout_height="match_parent"/>
 
+    <View
+        android:id="@+id/hun_family_list_center_view"
+        android:layout_width="4dp"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@drawable/dash_line"
+        />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerview_letter_hun_family_detail"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="2dp"
+        android:layout_width="0dp"
+        app:layout_constraintStart_toEndOf="@+id/hun_family_list_center_view"
+        android:layout_height="match_parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>
