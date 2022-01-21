@@ -2,24 +2,27 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/x65"
+    android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:layout_gravity="left"
+    android:layout_marginTop="@dimen/x20"
     >
 
     <TextView
         android:id="@+id/tv_hun_letter"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center"
         style="@style/ItemTitle"
         android:textStyle="bold"
         />
 
-    <TextView
-        android:id="@+id/tv_hun_letter_last_name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/x150"
-        style="@style/ItemTitle"
-        />
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/adapter_item_letter_name_recyclerview"
+        android:layout_marginStart="@dimen/x50"
+        android:layout_gravity="left"
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="wrap_content"/>
 
 </LinearLayout>

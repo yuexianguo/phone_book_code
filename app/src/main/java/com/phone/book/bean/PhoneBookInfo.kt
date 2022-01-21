@@ -269,18 +269,23 @@ class PhoneBookInfo : Serializable {
         return targetList
     }
 
-    fun getAllLetterNameList():ArrayList<LetterNameBean>{
-        var targetLetterNameList:ArrayList<LetterNameBean> = arrayListOf()
+    fun getAllLetterNameList(): ArrayList<HunLetterBean> {
+        var targetLetterNameList: ArrayList<HunLetterBean> = arrayListOf()
         for (letter in letterArray) {
             if (phoneList.isNotEmpty()) {
+                var lastNameList: ArrayList<String> = arrayListOf()
                 for (phoneBookItem in phoneList) {
                     val pingYin = PinyinUtils.getPingYin(phoneBookItem.name)
                     if (pingYin.isNotEmpty()) {
-                        if (pingYin.substring(0,1).equals(letter,ignoreCase = true)) {
-                            targetLetterNameList.add(LetterNameBean(letter,phoneBookItem.name.substring(0,1)))
-                            break
+                        if (pingYin.substring(0, 1).equals(letter, ignoreCase = true)) {
+                            if (!lastNameList.contains(phoneBookItem.name.substring(0, 1))) {
+                                lastNameList.add(phoneBookItem.name.substring(0, 1))
+                            }
                         }
                     }
+                }
+                if (lastNameList.isNotEmpty()) {
+                    targetLetterNameList.add(HunLetterBean(letter, lastNameList))
                 }
             }
         }

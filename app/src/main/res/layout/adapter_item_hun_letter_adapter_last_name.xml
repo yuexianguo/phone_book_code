@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/x60"
+    android:layout_height="@dimen/x60"
+    android:layout_gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/adapter_tv_hun_item_inner_name"
+        android:gravity="center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        style="@style/ItemTitle"/>
+
+</FrameLayout>
