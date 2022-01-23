@@ -291,6 +291,21 @@ class PhoneBookInfo : Serializable {
         }
         return targetLetterNameList
     }
+
+    fun getPhoneListByLastName(lastName:String): ArrayList<PhoneBookItem> {
+        var targetList: ArrayList<PhoneBookItem> = arrayListOf()
+        if (phoneList.isNotEmpty()) {
+            for (phoneBookItem in phoneList) {
+                if (phoneBookItem.name.isNotEmpty()) {
+                    val name = phoneBookItem.name
+                    if (name.isNotEmpty() && name.substring(0,1).equals(lastName, ignoreCase = true)) {
+                        targetList.add(phoneBookItem)
+                    }
+                }
+            }
+        }
+        return targetList
+    }
 }
 
 class PhoneBookItem : Serializable {

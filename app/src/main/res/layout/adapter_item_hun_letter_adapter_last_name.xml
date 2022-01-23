@@ -9,6 +9,7 @@
     <TextView
         android:id="@+id/adapter_tv_hun_item_inner_name"
         android:gravity="center"
+        android:layout_gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         style="@style/ItemTitle"/>
