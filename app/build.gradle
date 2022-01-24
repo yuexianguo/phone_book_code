@@ -10,7 +10,7 @@ android {
         minSdkVersion rootProject.min_sdk_version
         targetSdkVersion rootProject.target_sdk_version
         versionCode 1
-        versionName "1.0.0rc2"
+        versionName "1.0.0rc3"
         archivesBaseName = "PhoneBook"
 
         buildConfigField("boolean", "isOneOneVer", "false")
