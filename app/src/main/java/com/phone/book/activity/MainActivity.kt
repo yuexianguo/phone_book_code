@@ -4,16 +4,20 @@ import android.Manifest
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.phone.book.R
 import com.phone.book.common.BaseActivity
 import com.phone.book.common.utils.ActivityUtils.replaceFragment
+import com.phone.book.common.utils.PrefUtils
 import com.phone.book.fragment.home.HomeFragment
 import com.phone.book.fragment.home.TAG_HOME_FRAGMENT
+import com.phone.book.jobservice.Helpers
 import com.phone.book.manager.PhoneInfoManager
 
 
@@ -33,9 +37,12 @@ class MainActivity : BaseActivity() {
         }
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun initViews() {
         findViewById<View>(android.R.id.list)
         android.R.layout.simple_selectable_list_item
+        PrefUtils.writeLong("startServiceTime", 0L)
+        Helpers.schedule(this)
     }
 
 

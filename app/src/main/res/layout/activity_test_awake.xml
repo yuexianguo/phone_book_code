@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    android:padding="@dimen/x50"
+    tools:context=".activity.TestAwakeActivity">
+
+    <com.phone.book.view.EditInfoView
+        android:id="@+id/et_info_awake_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:editInfoName="唤醒时长"
+        app:editInfoHint="请输入时长"
+        />
+
+    <Button
+        android:id="@+id/bt_awake_time_save"
+        android:layout_width="@dimen/x120"
+        android:layout_height="@dimen/x60"
+        android:layout_marginTop="@dimen/x50"
+        android:background="@drawable/common_selector_btn_bg"
+        android:text="确定" />
+
+</LinearLayout>

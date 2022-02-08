@@ -102,5 +102,19 @@
         android:layout_width="0dp"
         app:layout_constraintStart_toEndOf="@+id/seek_call_center_view"
         android:layout_height="match_parent"/>
-
+    <Button
+        android:id="@+id/bt_test_tune"
+        android:layout_width="@dimen/x100"
+        android:layout_height="@dimen/x100"
+        android:layout_marginTop="@dimen/x20"
+        android:layout_marginRight="@dimen/x40"
+        android:layout_marginBottom="@dimen/x20"
+        android:background="@drawable/tune_circle_shape"
+        android:gravity="center"
+        android:text="Test"
+        android:textSize="@dimen/x60"
+        android:textColor="@color/black"
+        android:textAllCaps="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,7 @@
 package com.phone.book.fragment.home
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.text.InputType
 import android.view.LayoutInflater
@@ -11,6 +12,7 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.phone.book.R
 import com.phone.book.activity.MainActivity
+import com.phone.book.activity.TestAwakeActivity
 import com.phone.book.bean.PhoneBookItem
 
 import com.phone.book.common.BaseFragment
@@ -62,6 +64,12 @@ class SeekCallFragment : BaseFragment() {
         bt_seek_call_find2.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(v: View) {
                 startBt2Find()
+            }
+        })
+
+        bt_test_tune.setOnClickListener(object :OnSingleClickListener(){
+            override fun onSingleClick(v: View) {
+                activity?.startActivity(Intent(activity,TestAwakeActivity::class.java))
             }
         })
     }

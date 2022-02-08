@@ -93,9 +93,10 @@ abstract class BaseActivity : AppCompatActivity(), OperationCallback, BaseView {
     protected abstract val layoutId: Int
 
     protected abstract fun initViews()
-
+//    protected abstract fun initWindow()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+//        initWindow()
         setContentView(R.layout.common_activity_base)
         initCommonAppbar()
         setContentLayout()

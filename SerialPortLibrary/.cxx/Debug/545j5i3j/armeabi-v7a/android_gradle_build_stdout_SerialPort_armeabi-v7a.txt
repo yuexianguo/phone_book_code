@@ -1,3 +1,2 @@
 ninja: Entering directory `/Users/apple/Documents/person/code/phone_book_code/SerialPortLibrary/.cxx/Debug/545j5i3j/armeabi-v7a'
-[1/2] Building C object CMakeFiles/SerialPort.dir/SerialPort.c.o
-[2/2] Linking C shared library /Users/apple/Documents/person/code/phone_book_code/SerialPortLibrary/build/intermediates/cxx/Debug/545j5i3j/obj/armeabi-v7a/libSerialPort.so
+ninja: no work to do.

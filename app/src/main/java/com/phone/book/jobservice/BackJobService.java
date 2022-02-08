@@ -12,6 +12,7 @@ import androidx.annotation.RequiresApi;
 
 import com.derry.serialportlibrary.T;
 import com.phone.book.activity.MainActivity;
+import com.phone.book.activity.TestAwakeActivity;
 import com.phone.book.common.utils.PrefUtils;
 
 /**
@@ -60,10 +61,13 @@ public class BackJobService extends JobService {
             long currentTime = System.currentTimeMillis();
             Log.w(TAG, "doHardWork mHandler.postDelayed " + currentTime);
             mHandler.removeCallbacksAndMessages(null);
-            if (PrefUtils.INSTANCE.readLong("startServiceTime") != 0L && currentTime - PrefUtils.INSTANCE.readLong("startServiceTime") > 3 * 60 * 1000L) {
-                Intent intent = new Intent(BackJobService.this, MainActivity.class);
+            if (PrefUtils.INSTANCE.readLong("startServiceTime") > 0 && currentTime - PrefUtils.INSTANCE.readLong("startServiceTime")
+                    > PrefUtils.INSTANCE.readLong("awakeTime")) {
+                PrefUtils.writeLong("startServiceTime", 0L);
+                Intent intent = new Intent(BackJobService.this, TestAwakeActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 startActivity(intent);
+                mHandler.postDelayed(mRunnable, 5000L);
             } else {
                 mHandler.postDelayed(mRunnable, 5000L);
             }
