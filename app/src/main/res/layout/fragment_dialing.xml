@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="horizontal"
+    tools:context=".fragment.DialingFragment">
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
+        android:orientation="vertical"
+        android:padding="@dimen/x30">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/seek_call_item_bg"
+            android:orientation="vertical"
+            android:padding="@dimen/x20">
+
+            <LinearLayout
+                android:id="@+id/ll_phone_info_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:id="@+id/iv_phone_info_head"
+                    android:layout_width="@dimen/x200"
+                    android:layout_height="@dimen/x200"
+                    android:src="@mipmap/icon_man" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/phone_info_dept_name"
+                        style="@style/ItemTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="研发部" />
+
+                    <TextView
+                        android:id="@+id/phone_info_person_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/x20"
+                        android:text="老王"
+                        android:textSize="@dimen/x50" />
+
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/phone_info_work"
+                    style="@style/ItemTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right|bottom"
+                    android:layout_marginEnd="@dimen/x200"
+                    android:layout_marginBottom="@dimen/x20"
+                    android:text="员工" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/edit_info_box_item_value"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/x150"
+                android:background="@drawable/seek_call_item_bg"
+                android:gravity="start|center_vertical"
+                android:inputType="text"
+                android:paddingStart="@dimen/x5"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x80"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/x10">
+
+                <TextView
+                    android:id="@+id/tv_dialing_address"
+                    style="@style/ItemTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="地址：" />
+
+                <TextView
+                    android:id="@+id/tv_dialing_address_desc"
+                    style="@style/ItemTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/x20"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="@dimen/x10">
+
+                <TextView
+                    android:id="@+id/tv_dialing_remark"
+                    style="@style/ItemTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="备注：" />
+
+                <TextView
+                    android:id="@+id/tv_dialing_remark_desc"
+                    style="@style/ItemTitle"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/x20"
+                    android:layout_weight="1" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="@dimen/x30">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x150"
+            android:background="@color/black"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_dialing_time_long"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="通话时长"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x40" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_dialing_time_long"
+                    android:layout_margin="@dimen/x5"
+                    android:layout_weight="1"
+                    android:background="@drawable/dialing_time_box_bg"
+                    android:text="45"
+                    android:textSize="@dimen/x50" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_dialing_time_long"
+                    android:layout_margin="@dimen/x5"
+                    android:layout_weight="1"
+                    android:background="@drawable/dialing_time_box_bg"
+                    android:text="45"
+                    android:textSize="@dimen/x50" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_dialing_time_long"
+                    android:layout_margin="@dimen/x5"
+                    android:layout_weight="1"
+                    android:background="@drawable/dialing_time_box_bg"
+                    android:text="45"
+                    android:textSize="@dimen/x50" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x150"
+            android:layout_marginTop="@dimen/x20"
+            android:background="@color/black"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_dialing_record_time_long"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="录音时长"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x40" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_dialing_time_long"
+                    android:layout_margin="@dimen/x5"
+                    android:layout_weight="1"
+                    android:background="@drawable/dialing_time_box_bg"
+                    android:text="45"
+                    android:textSize="@dimen/x50" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_dialing_time_long"
+                    android:layout_margin="@dimen/x5"
+                    android:layout_weight="1"
+                    android:background="@drawable/dialing_time_box_bg"
+                    android:text="45"
+                    android:textSize="@dimen/x50" />
+
+                <Button
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/tv_dialing_time_long"
+                    android:layout_margin="@dimen/x5"
+                    android:layout_weight="1"
+                    android:background="@drawable/dialing_time_box_bg"
+                    android:text="45"
+                    android:textSize="@dimen/x50" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/bt_dialing_start_record"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x80"
+            android:layout_marginTop="@dimen/x20"
+            android:textSize="@dimen/x50"
+            android:background="@drawable/dialing_selector_btn_blue_bg"
+            android:text="开始录音" />
+
+        <Button
+            android:id="@+id/bt_dialing_quit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/x80"
+            android:layout_marginTop="@dimen/x20"
+            android:textSize="@dimen/x50"
+            android:background="@drawable/dialing_selector_btn_red_bg"
+            android:text="退出" />
+
+    </LinearLayout>
+
+
+</LinearLayout>

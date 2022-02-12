@@ -11,8 +11,9 @@ import android.util.Log;
 import androidx.annotation.RequiresApi;
 
 import com.derry.serialportlibrary.T;
-import com.phone.book.activity.MainActivity;
-import com.phone.book.activity.TestAwakeActivity;
+
+import com.phone.book.activity.DialingActivity;
+import com.phone.book.common.utils.LogUtil;
 import com.phone.book.common.utils.PrefUtils;
 
 /**
@@ -64,10 +65,18 @@ public class BackJobService extends JobService {
             if (PrefUtils.INSTANCE.readLong("startServiceTime") > 0 && currentTime - PrefUtils.INSTANCE.readLong("startServiceTime")
                     > PrefUtils.INSTANCE.readLong("awakeTime")) {
                 PrefUtils.writeLong("startServiceTime", 0L);
-                Intent intent = new Intent(BackJobService.this, TestAwakeActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+//                Intent intent = new Intent(BackJobService.this, DialingActivity.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                startActivity(intent);
+                DialingActivity.Companion.startDialingFragment(BackJobService.this,"");
                 mHandler.postDelayed(mRunnable, 5000L);
+                mHandler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        Log.w(TAG, "open again....");
+                        DialingActivity.Companion.startDialingFragment(BackJobService.this,"");
+                    }
+                },4000L);
             } else {
                 mHandler.postDelayed(mRunnable, 5000L);
             }

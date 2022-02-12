@@ -19,5 +19,7 @@
     <string name="received_call">已接</string>
     <string name="dialed_call">已拨</string>
     <string name="seek_call">查找</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

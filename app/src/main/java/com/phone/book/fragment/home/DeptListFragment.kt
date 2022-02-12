@@ -152,8 +152,12 @@ class DeptListFragment : BaseFragment() {
         })
 
         deptPhoneListAdapter?.setOnItemClickListener(object : DeptPhoneListAdapter.OnItemClickListener {
-            override fun onItemClick(phoneItem: PhoneBookItem) {
+            override fun onItemNameClick(phoneItem: PhoneBookItem) {
                 EditInfoContainerActivity.startPhoneInfoPage(mMainActivity, phoneItem)
+            }
+
+            override fun onItemNumberClick(phoneItem: PhoneBookItem) {
+
             }
         })
 
@@ -209,11 +213,15 @@ class DeptListFragment : BaseFragment() {
             var phoneBookItem = mList[position]
             holder.tvName.text = phoneBookItem.name
             holder.tvNumber.text = if (phoneBookItem.extension1.isNotEmpty()) phoneBookItem.extension1 else if (phoneBookItem.extension2.isNotEmpty()) phoneBookItem.extension2 else ""
-            holder.itemView.setOnClickListener(object : OnSingleClickListener() {
+            holder.tvName.setOnClickListener(object : OnSingleClickListener() {
                 override fun onSingleClick(v: View) {
-                    listener?.onItemClick(phoneBookItem)
+                    listener?.onItemNameClick(phoneBookItem)
                 }
-
+            })
+            holder.tvNumber.setOnClickListener(object : OnSingleClickListener() {
+                override fun onSingleClick(v: View) {
+                    listener?.onItemNumberClick(phoneBookItem)
+                }
             })
         }
 
@@ -233,7 +241,8 @@ class DeptListFragment : BaseFragment() {
         }
 
         interface OnItemClickListener {
-            fun onItemClick(phoneItem: PhoneBookItem)
+            fun onItemNameClick(phoneItem: PhoneBookItem)
+            fun onItemNumberClick(phoneItem: PhoneBookItem)
         }
 
         fun setOnItemClickListener(clickListener: OnItemClickListener) {
