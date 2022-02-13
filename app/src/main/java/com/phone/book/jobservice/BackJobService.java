@@ -46,7 +46,7 @@ public class BackJobService extends JobService {
         Log.w(TAG, "BackJobService onStartJob()");
         Helpers.doHardWork(this, params);
         mHandler.removeCallbacksAndMessages(null);
-        mHandler.postDelayed(mRunnable, 5000L);
+        mHandler.postDelayed(mRunnable, 8000L);
         return true;
     }
 
@@ -69,16 +69,16 @@ public class BackJobService extends JobService {
 //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                startActivity(intent);
                 DialingActivity.Companion.startDialingFragment(BackJobService.this,"");
-                mHandler.postDelayed(mRunnable, 5000L);
+                mHandler.postDelayed(mRunnable, 8000L);
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         Log.w(TAG, "open again....");
                         DialingActivity.Companion.startDialingFragment(BackJobService.this,"");
                     }
-                },4000L);
+                },15000L);
             } else {
-                mHandler.postDelayed(mRunnable, 5000L);
+                mHandler.postDelayed(mRunnable, 8000L);
             }
         }
     };

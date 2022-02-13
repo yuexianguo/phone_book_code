@@ -77,8 +77,8 @@ dependencies {
 //    api "pub.devrel:easypermissions:$easypermissions_version"
 
     //firebase
-    api platform("com.google.firebase:firebase-bom:$firebase_version")
-    api 'com.google.firebase:firebase-crashlytics-ktx'
+//    api platform("com.google.firebase:firebase-bom:$firebase_version")
+//    api 'com.google.firebase:firebase-crashlytics-ktx'
 
     //coroutines
     api "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"

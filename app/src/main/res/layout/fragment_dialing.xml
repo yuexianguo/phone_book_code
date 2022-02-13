@@ -1,16 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     android:orientation="horizontal"
     tools:context=".fragment.DialingFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/dialing_toolbar"
+        android:layout_width="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="@color/commonColorBase"
+        android:layout_height="?android:attr/actionBarSize"
+        android:theme="@style/AppTheme.ActionBar">
+
+        <TextView
+            android:id="@+id/tv_middle_title_base"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="left"
+            android:ellipsize="end"
+            android:gravity="left"
+            android:singleLine="true"
+            android:text="拨号"
+            android:textColor="@android:color/white"
+            android:textSize="@dimen/x36" />
+    </androidx.appcompat.widget.Toolbar>
+
     <LinearLayout
+        android:id="@+id/dialing_left_layout"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="3"
+        app:layout_constraintTop_toBottomOf="@+id/dialing_toolbar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/dialing_right_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="vertical"
         android:padding="@dimen/x30">
 
@@ -29,7 +58,7 @@
                 android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/iv_phone_info_head"
+                    android:id="@+id/iv_dialing_phone_info_head"
                     android:layout_width="@dimen/x200"
                     android:layout_height="@dimen/x200"
                     android:src="@mipmap/icon_man" />
@@ -42,35 +71,35 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/phone_info_dept_name"
+                        android:id="@+id/tv_dialing_dept_name"
                         style="@style/ItemTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="研发部" />
+                        android:text="" />
 
                     <TextView
-                        android:id="@+id/phone_info_person_name"
+                        android:id="@+id/tv_dialing_person_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/x20"
-                        android:text="老王"
+                        android:text=""
                         android:textSize="@dimen/x50" />
 
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/phone_info_work"
+                    android:id="@+id/tv_dialing_work"
                     style="@style/ItemTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="right|bottom"
                     android:layout_marginEnd="@dimen/x200"
                     android:layout_marginBottom="@dimen/x20"
-                    android:text="员工" />
+                    android:text="" />
             </LinearLayout>
 
             <EditText
-                android:id="@+id/edit_info_box_item_value"
+                android:id="@+id/et_dialing_phone_number"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/x150"
                 android:background="@drawable/seek_call_item_bg"
@@ -131,9 +160,14 @@
     </LinearLayout>
 
     <LinearLayout
+        android:id="@+id/dialing_right_layout"
         android:layout_width="0dp"
-        android:layout_height="match_parent"
-        android:layout_weight="1"
+        android:layout_height="wrap_content"
+        app:layout_constraintHorizontal_weight="1"
+        app:layout_constraintTop_toBottomOf="@+id/dialing_toolbar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/dialing_left_layout"
+        app:layout_constraintBottom_toBottomOf="parent"
         android:orientation="vertical"
         android:padding="@dimen/x30">
 
@@ -158,6 +192,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/bt_dialing_time_hours"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_dialing_time_long"
@@ -168,6 +203,7 @@
                     android:textSize="@dimen/x50" />
 
                 <Button
+                    android:id="@+id/bt_dialing_time_minutes"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_dialing_time_long"
@@ -178,6 +214,7 @@
                     android:textSize="@dimen/x50" />
 
                 <Button
+                    android:id="@+id/bt_dialing_time_seconds"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_dialing_time_long"
@@ -213,6 +250,7 @@
                 android:orientation="horizontal">
 
                 <Button
+                    android:id="@+id/bt_dialing_record_hours"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_dialing_time_long"
@@ -223,6 +261,7 @@
                     android:textSize="@dimen/x50" />
 
                 <Button
+                    android:id="@+id/bt_dialing_record_minutes"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_dialing_time_long"
@@ -233,6 +272,7 @@
                     android:textSize="@dimen/x50" />
 
                 <Button
+                    android:id="@+id/bt_dialing_record_seconds"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_below="@+id/tv_dialing_time_long"
@@ -256,7 +296,7 @@
             android:text="开始录音" />
 
         <Button
-            android:id="@+id/bt_dialing_quit"
+            android:id="@+id/bt_dialing_out"
             android:layout_width="match_parent"
             android:layout_height="@dimen/x80"
             android:layout_marginTop="@dimen/x20"
@@ -267,4 +307,4 @@
     </LinearLayout>
 
 
-</LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
