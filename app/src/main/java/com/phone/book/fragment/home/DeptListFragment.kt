@@ -23,6 +23,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.phone.book.PhoneIntents
 import com.phone.book.PhoneIntents.Companion.ACTION_DELETE_DEPT_SUCCESS
 import com.phone.book.R
+import com.phone.book.activity.DialingActivity
 import com.phone.book.activity.EditInfoContainerActivity
 import com.phone.book.activity.MainActivity
 import com.phone.book.adapter.DeptTreeAdapter
@@ -157,7 +158,7 @@ class DeptListFragment : BaseFragment() {
             }
 
             override fun onItemNumberClick(phoneItem: PhoneBookItem) {
-
+                DialingActivity.startDialingFragment(activity, "",phoneItem)
             }
         })
 

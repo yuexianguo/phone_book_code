@@ -13,10 +13,14 @@ import java.io.Serializable
 
 const val TYPE_MAN = "男士"
 const val TYPE_WOMAN = "女士"
+const val DIAL_TYPE_MISSED_CALL = "未接"
+const val DIAL_TYPE_RECEIVED_CALL = "已接"
+const val DIAL_TYPE_DIALED_CALL = "已拨"
 
 class PhoneBookInfo : Serializable {
     var phoneList: ArrayList<PhoneBookItem> = arrayListOf()
     var phoneDepartItemList: ArrayList<PhoneDepartItem> = arrayListOf()
+    var phoneHistoryItemList: ArrayList<PhoneHistoryItem> = arrayListOf()
     var letterArray = arrayOf(
         "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K",
         "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X",
@@ -49,6 +53,10 @@ class PhoneBookInfo : Serializable {
         phoneDepartItemList.add(phoneDepartItem)
     }
 
+    fun insertPhoneHistoryItem(phoneHistoryItem: PhoneHistoryItem) {
+        phoneHistoryItemList.add(phoneHistoryItem)
+    }
+
 
     //for create PhoneBookItem only
     fun generatePhoneId(): Long {
@@ -68,6 +76,17 @@ class PhoneBookInfo : Serializable {
             targetId = 1
         } else {
             targetId = phoneDepartItemList[phoneDepartItemList.size - 1].id + 1
+        }
+        return targetId
+    }
+
+    //for create PhoneHistoryItem only
+    fun generatePhoneHistoryItemId(): Long {
+        var targetId = 0L
+        if (phoneHistoryItemList.size <= 0) {
+            targetId = 1
+        } else {
+            targetId = phoneHistoryItemList[phoneHistoryItemList.size - 1].id + 1
         }
         return targetId
     }
@@ -361,5 +380,25 @@ class PhoneDepartItem : Serializable {
         this.pid = pid
         this.level = level
         this.name = name
+    }
+}
+
+class PhoneHistoryItem : Serializable {
+    var id: Long;
+    var phoneBookItemid: Long;
+    var dialType: String; //"未接"， "已接"， "已拨"
+    var name: String;
+    var phone: String;
+    var startTime: String;
+    var dialogTimeLength: String;
+
+    constructor(id: Long, phoneBookItemid: Long, dialType: String, name: String, phone: String, startTime: String, dialogTimeLength: String) {
+        this.id = id
+        this.phoneBookItemid = phoneBookItemid
+        this.dialType = dialType
+        this.name = name
+        this.phone = phone
+        this.startTime = startTime
+        this.dialogTimeLength = dialogTimeLength
     }
 }

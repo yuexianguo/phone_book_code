@@ -199,7 +199,7 @@
                     android:layout_margin="@dimen/x5"
                     android:layout_weight="1"
                     android:background="@drawable/dialing_time_box_bg"
-                    android:text="45"
+                    android:text=""
                     android:textSize="@dimen/x50" />
 
                 <Button
@@ -210,7 +210,7 @@
                     android:layout_margin="@dimen/x5"
                     android:layout_weight="1"
                     android:background="@drawable/dialing_time_box_bg"
-                    android:text="45"
+                    android:text=""
                     android:textSize="@dimen/x50" />
 
                 <Button
@@ -221,7 +221,7 @@
                     android:layout_margin="@dimen/x5"
                     android:layout_weight="1"
                     android:background="@drawable/dialing_time_box_bg"
-                    android:text="45"
+                    android:text=""
                     android:textSize="@dimen/x50" />
 
             </LinearLayout>
@@ -257,7 +257,7 @@
                     android:layout_margin="@dimen/x5"
                     android:layout_weight="1"
                     android:background="@drawable/dialing_time_box_bg"
-                    android:text="45"
+                    android:text=""
                     android:textSize="@dimen/x50" />
 
                 <Button
@@ -268,7 +268,7 @@
                     android:layout_margin="@dimen/x5"
                     android:layout_weight="1"
                     android:background="@drawable/dialing_time_box_bg"
-                    android:text="45"
+                    android:text=""
                     android:textSize="@dimen/x50" />
 
                 <Button
@@ -279,7 +279,7 @@
                     android:layout_margin="@dimen/x5"
                     android:layout_weight="1"
                     android:background="@drawable/dialing_time_box_bg"
-                    android:text="45"
+                    android:text=""
                     android:textSize="@dimen/x50" />
 
             </LinearLayout>

@@ -4,6 +4,8 @@ import android.app.Dialog
 import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import android.view.View
 import android.view.ViewGroup
@@ -14,13 +16,19 @@ import androidx.appcompat.app.AlertDialog
 import com.derry.serialportlibrary.T
 import com.phone.book.R
 import com.phone.book.activity.DialingActivity
+import com.phone.book.bean.DIAL_TYPE_DIALED_CALL
+import com.phone.book.bean.PhoneBookItem
+import com.phone.book.bean.PhoneHistoryItem
 import com.phone.book.common.dialog.BaseDialogFragment
 import com.phone.book.common.listener.OnSingleClickListener
+import com.phone.book.manager.PhoneInfoManager
+import com.phone.book.utils.DialTimeUtils
 import kotlinx.android.synthetic.main.fragment_dialing.*
 
 private const val ARG_PARAM1 = "param1"
 
 const val TAG_DIALING_FRAGMENT = "tag_dialing_fragment"
+
 class DialingFragment : BaseDialogFragment() {
     private var mActivity: DialingActivity? = null
     private var param1: String? = null
@@ -38,12 +46,18 @@ class DialingFragment : BaseDialogFragment() {
     private lateinit var bt_dialing_record_seconds: Button
     private lateinit var bt_dialing_out: Button
 
+    private var mHandler: Handler = Handler(Looper.getMainLooper())
+    private var mDialSeconds: Int = 0
+    private var mDialMinutes: Int = 0
+    private var mDialHours: Int = 0
+    private var mStartDialTime: String = ""
+
     companion object {
         @JvmStatic
-        fun newInstance(param1: String) =
+        fun newInstance(phoneNum: String?, phoneItem: PhoneBookItem?) =
             DialingFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM1, phoneNum)
                 }
             }
     }
@@ -73,22 +87,6 @@ class DialingFragment : BaseDialogFragment() {
         }
     }
 
-
-    private fun clearDataForInit() {
-        tv_dialing_dept_name.text = ""
-        tv_dialing_person_name.text = ""
-        tv_dialing_work.text = ""
-        et_dialing_phone_number.setText("")
-        tv_dialing_address_desc.text = ""
-        tv_dialing_remark_desc.text = ""
-        bt_dialing_time_hours.text = ""
-        bt_dialing_time_minutes.text = ""
-        bt_dialing_time_seconds.text = ""
-        bt_dialing_record_hours.text = ""
-        bt_dialing_record_minutes.text = ""
-        bt_dialing_record_seconds.text = ""
-    }
-
     fun initViews(dialog: AlertDialog) {
         tv_dialing_dept_name = dialog.findViewById(R.id.tv_dialing_dept_name)!!
         tv_dialing_person_name = dialog.findViewById(R.id.tv_dialing_person_name)!!
@@ -108,7 +106,7 @@ class DialingFragment : BaseDialogFragment() {
         Log.w(T.TAG, "DialingFragment initViews")
         initToolbar()
         initData()
-        bt_dialing_out.setOnClickListener(object :OnSingleClickListener(){
+        bt_dialing_out.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(v: View) {
                 mActivity?.onBackPressed()
             }
@@ -116,13 +114,42 @@ class DialingFragment : BaseDialogFragment() {
     }
 
     private fun initData() {
-        clearDataForInit()
-
+//        clearDataForInit()
+        mStartDialTime = DialTimeUtils.getCurrentTimeByFormat()
+        mHandler.removeCallbacks(mDialTimeRunnable)
+        mHandler.postDelayed(mDialTimeRunnable, 1000L)
     }
+
+    private val mDialTimeRunnable: Runnable
+        get() = Runnable {
+            mDialSeconds++
+            if (mDialSeconds >= 60) {
+                mDialSeconds = 0
+                mDialMinutes++
+            }
+            if (mDialMinutes >= 60) {
+                mDialSeconds = 0
+                mDialMinutes = 0
+                mDialHours++
+            }
+            bt_dialing_time_seconds.text = String.format("%02d", mDialSeconds)
+            bt_dialing_time_minutes.text = String.format("%02d", mDialMinutes)
+            bt_dialing_time_hours.text = String.format("%02d", mDialHours)
+            mHandler.postDelayed(mDialTimeRunnable, 1000L)
+        }
 
     private fun initToolbar() {
         mActivity?.hideLogo()
 //        setToolbarTitle("拨号", true)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+//        PhoneInfoManager.instance.phoneInfo.insertPhoneHistoryItem(PhoneHistoryItem(PhoneInfoManager.instance.phoneInfo.generatePhoneHistoryItemId(),
+//        "", DIAL_TYPE_DIALED_CALL,))
+        PhoneInfoManager.instance.phoneInfo.saveOrUpdate(requireContext())
+        mHandler.removeCallbacks(mDialTimeRunnable)
+        mActivity?.finish()
     }
 
     override fun onAttach(context: Context) {
