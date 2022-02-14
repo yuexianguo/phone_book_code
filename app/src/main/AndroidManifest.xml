@@ -29,6 +29,13 @@
             android:permission="android.permission.BIND_JOB_SERVICE"
             />
         <activity
+            android:name=".activity.DialingInitActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="landscape"
+            android:exported="true"
+            android:windowSoftInputMode="adjustPan" />
+
+        <activity
             android:name=".activity.DialingActivity"
             android:launchMode="singleTask"
             android:screenOrientation="landscape"

@@ -108,7 +108,7 @@ class DialingFragment : BaseDialogFragment() {
         initData()
         bt_dialing_out.setOnClickListener(object : OnSingleClickListener() {
             override fun onSingleClick(v: View) {
-                mActivity?.onBackPressed()
+                mActivity?.finish()
             }
         })
     }

@@ -68,13 +68,13 @@ public class BackJobService extends JobService {
 //                Intent intent = new Intent(BackJobService.this, DialingActivity.class);
 //                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //                startActivity(intent);
-                DialingActivity.Companion.startDialingFragment(BackJobService.this,"", phoneItem);
+                DialingActivity.Companion.startDialingFragment(BackJobService.this,"", null);
                 mHandler.postDelayed(mRunnable, 8000L);
                 mHandler.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         Log.w(TAG, "open again....");
-                        DialingActivity.Companion.startDialingFragment(BackJobService.this,"", phoneItem);
+                        DialingActivity.Companion.startDialingFragment(BackJobService.this,"", null);
                     }
                 },15000L);
             } else {
