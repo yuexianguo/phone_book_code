@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
 import android.widget.Button
+import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.derry.serialportlibrary.T
@@ -35,7 +36,7 @@ class DialingFragment : BaseDialogFragment() {
     private lateinit var tv_dialing_dept_name: TextView
     private lateinit var tv_dialing_person_name: TextView
     private lateinit var tv_dialing_work: TextView
-    private lateinit var et_dialing_phone_number: TextView
+    private lateinit var et_dialing_phone_number: EditText
     private lateinit var tv_dialing_address_desc: TextView
     private lateinit var tv_dialing_remark_desc: TextView
     private lateinit var bt_dialing_time_hours: Button
