@@ -18,7 +18,7 @@ import com.derry.serialportlibrary.T;
 /**
  * description :
  * author : Andy.Guo
- * email : Andy.Guo@waclightiong.com.cn
+ * email : 495311081@qq.com
  * data : 2022/1/26
  */
 public class Helpers {

@@ -24,7 +24,7 @@ import com.phone.book.manager.PhoneInfoManager
 /**
  * description :
  * author : Andy.Guo
- * email : Andy.Guo@waclightiong.com.cn
+ * email : 495311081@qq.com
  * data : 2022/1/12
  */
 const val TAG_PHONE_INFO_BOTTOM = "tag_phone_info_bottom"

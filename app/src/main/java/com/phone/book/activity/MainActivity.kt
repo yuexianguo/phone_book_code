@@ -6,17 +6,20 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.derry.serialportlibrary.T
 import com.phone.book.R
 import com.phone.book.common.BaseActivity
 import com.phone.book.common.utils.ActivityUtils.replaceFragment
 import com.phone.book.common.utils.PrefUtils
 import com.phone.book.fragment.home.HomeFragment
 import com.phone.book.fragment.home.TAG_HOME_FRAGMENT
+import com.phone.book.jobservice.ArraysUtils
 import com.phone.book.jobservice.Helpers
 import com.phone.book.manager.PhoneInfoManager
 
@@ -35,6 +38,10 @@ class MainActivity : BaseActivity() {
         if (savedInstanceState == null) {
             startHomeFragment(false)
         }
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            Helpers.schedule(this)
+        }
+
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

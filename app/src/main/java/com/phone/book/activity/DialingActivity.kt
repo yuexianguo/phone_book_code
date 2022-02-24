@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.text.TextUtils
+import android.view.WindowManager
 import com.derry.serialportlibrary.T
 import com.phone.book.R
 import com.phone.book.bean.PhoneBookItem
@@ -19,15 +20,13 @@ class DialingActivity : BaseActivity() {
     companion object {
         private const val EXTRA_KEY_TARGET_FRAGMENT = "target_fragment"
         private const val EXTRA_KEY_TARGET_PHONEITEM = "extra_key_target_phoneitem"
-        private const val EXTRA_KEY_TARGET_PHONENUM = "extra_key_target_phonenum"
         private const val TAG = "DialingActivity"
 
-        fun startDialingFragment(context: Context?, phoneNum: String?, phoneItem: PhoneBookItem?) {
+        fun startDialingFragment(context: Context?, phoneItem: PhoneBookItem?) {
             if (context != null) {
                 val intent = Intent(context, DialingActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK;
                 intent.putExtra(EXTRA_KEY_TARGET_FRAGMENT, TAG_DIALING_FRAGMENT)
-                intent.putExtra(EXTRA_KEY_TARGET_PHONENUM, phoneNum)
                 intent.putExtra(EXTRA_KEY_TARGET_PHONEITEM, phoneItem)
 //                intent.putExtra(TAG_TARGET_DEPART_ITEM, targetDept)
                 context.startActivity(intent)
@@ -45,30 +44,28 @@ class DialingActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        if (savedInstanceState == null) {
-            LogUtil.d(T.TAG, "onCreate")
-            startTarget()
-        }
+//        if (savedInstanceState == null) {
+        LogUtil.d(T.TAG, "onCreate")
+        startTarget()
+//        }
     }
 
     override fun onNewIntent(intent: Intent?) {
         super.onNewIntent(intent)
         LogUtil.d(T.TAG, "onNewIntent")
-        startTarget()
     }
 
-    private fun showDialingPage(phoneNum: String?, phoneItem: PhoneBookItem?) {
+    private fun showDialingPage(phoneItem: PhoneBookItem?) {
         val fragment = supportFragmentManager.findFragmentByTag(TAG_DIALING_FRAGMENT) as DialingFragment?
         fragment?.dismissAllowingStateLoss()
-        DialingFragment.newInstance(phoneNum, phoneItem).show(supportFragmentManager, TAG_DIALING_FRAGMENT)
+        DialingFragment.newInstance(phoneItem).show(supportFragmentManager, TAG_DIALING_FRAGMENT)
     }
 
     private fun startTarget() {
         var target = intent.getStringExtra(EXTRA_KEY_TARGET_FRAGMENT)
-        val phoneNum = intent.getStringExtra(EXTRA_KEY_TARGET_PHONENUM)
         val phoneItem = if (intent.getSerializableExtra(EXTRA_KEY_TARGET_PHONEITEM) != null) intent.getSerializableExtra(EXTRA_KEY_TARGET_PHONEITEM) as PhoneBookItem else null
         if (!TextUtils.isEmpty(target)) {
-            showDialingPage(phoneNum, phoneItem)
+            showDialingPage(phoneItem)
         }
     }
 

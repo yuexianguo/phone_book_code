@@ -2,7 +2,6 @@ package com.phone.book.fragment
 
 import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -24,15 +23,14 @@ import com.phone.book.common.dialog.BaseDialogFragment
 import com.phone.book.common.listener.OnSingleClickListener
 import com.phone.book.manager.PhoneInfoManager
 import com.phone.book.utils.DialTimeUtils
-import kotlinx.android.synthetic.main.fragment_dialing.*
 
-private const val ARG_PARAM1 = "param1"
+private const val ARG_PHONE_ITEM = "arg_phoneitem"
 
 const val TAG_DIALING_FRAGMENT = "tag_dialing_fragment"
 
 class DialingFragment : BaseDialogFragment() {
     private var mActivity: DialingActivity? = null
-    private var param1: String? = null
+    private var mPhoneItem: PhoneBookItem? = null
     private lateinit var tv_dialing_dept_name: TextView
     private lateinit var tv_dialing_person_name: TextView
     private lateinit var tv_dialing_work: TextView
@@ -55,10 +53,10 @@ class DialingFragment : BaseDialogFragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance(phoneNum: String?, phoneItem: PhoneBookItem?) =
+        fun newInstance(phoneItem: PhoneBookItem?) =
             DialingFragment().apply {
                 arguments = Bundle().apply {
-                    putString(ARG_PARAM1, phoneNum)
+                    putSerializable(ARG_PHONE_ITEM, phoneItem)
                 }
             }
     }
@@ -83,8 +81,7 @@ class DialingFragment : BaseDialogFragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            Log.w(T.TAG, "DialingFragment param1=$param1")
+            mPhoneItem = if (it.getSerializable(ARG_PHONE_ITEM) != null) it.getSerializable(ARG_PHONE_ITEM) as PhoneBookItem else null
         }
     }
 
@@ -102,6 +99,13 @@ class DialingFragment : BaseDialogFragment() {
         bt_dialing_record_minutes = dialog.findViewById(R.id.bt_dialing_record_minutes)!!
         bt_dialing_record_seconds = dialog.findViewById(R.id.bt_dialing_record_seconds)!!
         bt_dialing_out = dialog.findViewById(R.id.bt_dialing_out)!!
+
+        tv_dialing_dept_name.text = mPhoneItem?.department?.name ?: ""
+        tv_dialing_person_name.text = mPhoneItem?.name?:""
+        tv_dialing_work.text = mPhoneItem?.work?:""
+        mPhoneItem?.also { phoneBookItem->
+            et_dialing_phone_number.setText(if(phoneBookItem.extension1.isNotEmpty()) phoneBookItem.extension1 else if (phoneBookItem.extension2.isNotEmpty()) phoneBookItem.extension2 else "")
+        }
 
 
         Log.w(T.TAG, "DialingFragment initViews")
@@ -148,9 +152,25 @@ class DialingFragment : BaseDialogFragment() {
         super.onDestroy()
 //        PhoneInfoManager.instance.phoneInfo.insertPhoneHistoryItem(PhoneHistoryItem(PhoneInfoManager.instance.phoneInfo.generatePhoneHistoryItemId(),
 //        "", DIAL_TYPE_DIALED_CALL,))
-        PhoneInfoManager.instance.phoneInfo.saveOrUpdate(requireContext())
+        savingDialingTime()
+
         mHandler.removeCallbacks(mDialTimeRunnable)
         mActivity?.finish()
+    }
+
+    private fun savingDialingTime() {
+        mPhoneItem?.also {
+            val extension = if(it.extension1.isNotEmpty()) it.extension1 else if (it.extension2.isNotEmpty()) it.extension2 else ""
+            var phonebookId = it.id ?: 0L
+            var phonebookName = it.name ?: ""
+            PhoneInfoManager.instance.phoneInfo.insertPhoneHistoryItem(
+                PhoneHistoryItem(
+                    PhoneInfoManager.instance.phoneInfo.generatePhoneHistoryItemId(), phonebookId,
+                    DIAL_TYPE_DIALED_CALL, phonebookName, extension, mStartDialTime, String.format("%02d:%02d:%02d", mDialHours, mDialMinutes, mDialSeconds)
+                )
+            )
+            PhoneInfoManager.instance.phoneInfo.saveOrUpdate(requireContext())
+        }
     }
 
     override fun onAttach(context: Context) {

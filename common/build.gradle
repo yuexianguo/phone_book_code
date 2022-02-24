@@ -53,7 +53,7 @@ dependencies {
     api "androidx.core:core-ktx:$x_core_ktx"
 
     //mqtt sdk
-    api "com.amazonaws:aws-android-sdk-iot:$aws_version"
+//    api "com.amazonaws:aws-android-sdk-iot:$aws_version"
     //network
     api "com.squareup.okhttp3:okhttp:$okhttp_version"
     api "com.android.volley:volley:$volley_version"

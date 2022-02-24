@@ -8,7 +8,7 @@ import java.io.File
 /**
  * description :
  * author : Andy.Guo
- * email : Andy.Guo@waclightiong.com.cn
+ * email : 495311081@qq.com
  * data : 2021/5/6
  */
 object LogToCloudUtils {

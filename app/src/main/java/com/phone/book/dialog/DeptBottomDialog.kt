@@ -22,7 +22,7 @@ import com.phone.book.manager.PhoneInfoManager
 /**
  * description :
  * author : Andy.Guo
- * email : Andy.Guo@waclightiong.com.cn
+ * email : 495311081@qq.com
  * data : 2021/10/20
  */
 const val TAG_PHONE_DEPAR = "tag_phone_depar"

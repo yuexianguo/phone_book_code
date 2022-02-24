@@ -5,7 +5,7 @@ import android.text.TextUtils;
 /**
  * description :
  * author : Andy.Guo
- * email : Andy.Guo@waclightiong.com.cn
+ * email : 495311081@qq.com
  * data : 2021/6/8
  */
 public class VersionUtils {

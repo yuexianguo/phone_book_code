@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * description :
  * author : Andy.Guo
- * email : Andy.Guo@waclightiong.com.cn
+ * email : 495311081@qq.com
  * data : 2021/12/31
  */
 public class DeptTree {

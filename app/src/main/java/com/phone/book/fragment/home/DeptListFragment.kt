@@ -10,6 +10,7 @@ import android.content.pm.PackageManager
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,6 +21,8 @@ import androidx.localbroadcastmanager.content.LocalBroadcastManager
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.derry.serialportlibrary.SerialPortManager
+import com.derry.serialportlibrary.T
 import com.phone.book.PhoneIntents
 import com.phone.book.PhoneIntents.Companion.ACTION_DELETE_DEPT_SUCCESS
 import com.phone.book.R
@@ -34,6 +37,8 @@ import com.phone.book.common.BaseFragment
 import com.phone.book.common.listener.OnSingleClickListener
 import com.phone.book.common.utils.LogUtil
 import com.phone.book.dialog.DeptBottomDialog
+import com.phone.book.jobservice.ArraysUtils
+import com.phone.book.jobservice.ArraysUtils.hexToBytes
 import com.phone.book.manager.PhoneInfoManager
 import kotlinx.android.synthetic.main.fragment_dept_list.*
 import kotlin.collections.ArrayList
@@ -158,7 +163,19 @@ class DeptListFragment : BaseFragment() {
             }
 
             override fun onItemNumberClick(phoneItem: PhoneBookItem) {
-                DialingActivity.startDialingFragment(activity, "",phoneItem)
+
+//        byte[] sendContentBytes = sendContent.getBytes();
+                val phoneExtension = if (phoneItem.extension1.isNotEmpty()) phoneItem.extension1 else if (phoneItem.extension2.isNotEmpty()) phoneItem.extension2 else ""
+                if (phoneExtension.isNotEmpty()) {
+                    //内线需要先发送ATD9；然后再发送电话号码  ATD9 —>41544439
+                    val sendPhoneType: ByteArray = hexToBytes("41544439")
+                    val strToAscii = ArraysUtils.convertStringToHex(phoneExtension)
+                    val sendPhoneExtension: ByteArray = hexToBytes(strToAscii)
+                    val isSendTypeSuccess = SerialPortManager.getInstance().sendBytes(sendPhoneType)
+                    Log.d(T.TAG,"strToAscii =$strToAscii")
+                    val isPhoneExtensionSuccess = SerialPortManager.getInstance().sendBytes(sendPhoneExtension)
+                    if (isSendTypeSuccess && isPhoneExtensionSuccess) DialingActivity.startDialingFragment(activity, phoneItem)
+                }
             }
         })
 

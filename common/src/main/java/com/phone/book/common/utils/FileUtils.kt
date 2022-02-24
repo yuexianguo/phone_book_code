@@ -11,7 +11,7 @@ import java.nio.ByteBuffer
 /**
  * description :
  * author : Andy.Guo
- * email : Andy.Guo@waclightiong.com.cn
+ * email : 495311081@qq.com
  * data : 2021/1/9
  */
 const val URL_TYPE_SCM = "SCM"
