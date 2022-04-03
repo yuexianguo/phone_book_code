@@ -64,6 +64,7 @@ class PhoneBookInfo : Serializable {
         if (phoneList.size <= 0) {
             targetId = 1
         } else {
+            phoneList.sortBy { it.id }
             targetId = phoneList[phoneList.size - 1].id + 1
         }
         return targetId
@@ -75,6 +76,7 @@ class PhoneBookInfo : Serializable {
         if (phoneDepartItemList.size <= 0) {
             targetId = 1
         } else {
+            phoneDepartItemList.sortBy { it.id }
             targetId = phoneDepartItemList[phoneDepartItemList.size - 1].id + 1
         }
         return targetId
@@ -86,6 +88,7 @@ class PhoneBookInfo : Serializable {
         if (phoneHistoryItemList.size <= 0) {
             targetId = 1
         } else {
+            phoneHistoryItemList.sortBy { it.id }
             targetId = phoneHistoryItemList[phoneHistoryItemList.size - 1].id + 1
         }
         return targetId
